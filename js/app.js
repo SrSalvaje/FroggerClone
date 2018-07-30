@@ -1,7 +1,7 @@
 
 // Enemies our player must avoid
 class Enemy{
-    constructor(){
+    constructor() {
     // Variables applied to each of our instances go here,
         this.sprite="images/enemy-bug.png";
         //set enemy initial location
@@ -62,4 +62,6 @@ document.addEventListener('keyup', function(e) {
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
+const allEnemies=[];
 // Place the player object in a variable called player
+const player = new Player();
