@@ -8,7 +8,7 @@
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
 class Enemy{
-    constructor() {
+    constructor( ) {
     // Variables applied to each of our instances go here,
         this.sprite="images/enemy-bug.png";
         //set enemy initial location
@@ -39,8 +39,11 @@ class Enemy{
 /**************************player constructor*************************/
 //////////////////////////////////////////////////////////////////////
 class Player{
-    constructor(){
+    constructor(x, y, speed){
         this.sprite="images/char-boy.png";
+        this.x=x
+        this.y=y
+        this.speed=speed
         //set player inital location
         //
     }
@@ -48,7 +51,7 @@ class Player{
         //similar to enemy
 
     }
-    render(){
+    render(x, y){
         //use code from enemy
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 
@@ -117,4 +120,5 @@ document.addEventListener('keyup', function(e) {
 // Place all enemy objects in an array called allEnemies
 const allEnemies=[];
 // Place the player object in a variable called player
-const player = new Player();
+const player = new Player(200, 430, 10);
+player.render();
