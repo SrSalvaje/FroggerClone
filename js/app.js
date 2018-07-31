@@ -53,15 +53,19 @@ class Player extends Character{
         switch(keyPressed){
             case "up":
                 //coordinate
+                this.y -=50;
                 break;
             case "down":
                 //coordinate
+                this.y += 50;
                 break;
             case "right":
                 //coordinate
+                this.x += 50;
                 break;
             case "left":
                 //coordinate
+                this.x -= 50;
                 break;
         }
     }
