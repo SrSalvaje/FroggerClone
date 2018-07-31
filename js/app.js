@@ -48,28 +48,31 @@ class Player extends Character{
         super(x, y, speed, imgSource);
     }
     //render method inherited from Character class
+    update(){
 
-    handleInput(keyPressed){
+    }
+
+    handleInput (keyPressed){
         switch(keyPressed){
             case "up":
                 //coordinate
-                this.y -=50;
+                this.y -=83;
                 break;
             case "down":
                 //coordinate
-                this.y += 50;
+                this.y += 83;
                 break;
             case "right":
                 //coordinate
-                this.x += 50;
+                this.x += 101;
                 break;
             case "left":
                 //coordinate
-                this.x -= 50;
+                this.x -= 101;
                 break;
-        }
+            }
     }
-}
+}    
 ///////////////////////////////////////////////////////////////////////////
 /******************************player functions***************************/
 ///////////////////////////////////////////////////////////////////////////
@@ -124,5 +127,5 @@ document.addEventListener('keyup', function(e) {
 
 // Place all enemy objects in an array called allEnemies
 const allEnemies=[];
-const player = new Player(200, 430, 10, boy);
+const player = new Player(200, 405, 10, boy);
 player.render();
