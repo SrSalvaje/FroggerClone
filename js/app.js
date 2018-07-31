@@ -19,14 +19,6 @@ class Character{
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-    update(dt){
-        // You should multiply any movement by the dt parameter
-        // which will ensure the game runs at the same speed for
-        // all computers.
-        /* this methods needs to: 
-            Updates the Enemy location
-            Handle collision with the Player*/
-        }
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -39,6 +31,7 @@ class Enemy extends Character{
         //set enemy initial location
         //set enemy speed
     }
+
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -54,13 +47,23 @@ class Player extends Character{
     constructor(x, y, speed, imgSource ){
         super(x, y, speed, imgSource);
     }
-    handleInput(){
-        /* Recall that the player cannot move off screen 
-        (so you will need to check for that and handle appropriately). */
+    //render method inherited from Character class
 
-        /* f the player reaches the water the game should be reset by moving 
-        the player back to the initial location 
-        (you can write a separate reset Player method to handle that). */
+    handleInput(keyPressed){
+        switch(keyPressed){
+            case "up":
+                //coordinate
+                break;
+            case "down":
+                //coordinate
+                break;
+            case "right":
+                //coordinate
+                break;
+            case "left":
+                //coordinate
+                break;
+        }
     }
 }
 ///////////////////////////////////////////////////////////////////////////
