@@ -1,31 +1,43 @@
 ///////////////////////////////////////////////////////////////////////////
 /**************************global variables*****************************/
 ///////////////////////////////////////////////////////////////////////////
+const boy = "images/char-boy.png";
+const evilBug="enemy-bug.png";
 
+//////////////////////////////////////////////////////////////////////////
+/*****************************a class to rule them all***********************/
+//////////////////////////////////////////////////////////////////////////
 
+class Character{
+    constructor(x, y, speed, imgSource){
+        this.sprite=`${imgSource}`;
+        this.x=x;
+        this.y=y;
+        this.speed=speed;
+
+    }
+    render(){
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+    update(dt){
+        // You should multiply any movement by the dt parameter
+        // which will ensure the game runs at the same speed for
+        // all computers.
+        /* this methods needs to: 
+            Updates the Enemy location
+            Handle collision with the Player*/
+        }
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
-class Enemy{
-    constructor( ) {
+class Enemy extends Character{
+    constructor(x,y, speed, imgSource) {
+        super(x,y,speed, imgSource);
     // Variables applied to each of our instances go here,
-        this.sprite="images/enemy-bug.png";
         //set enemy initial location
         //set enemy speed
-    }
-    update(dt){
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-    /* this methods needs to: 
-        Updates the Enemy location
-        Handle collision with the Player*/
-    }
-    // Draw the enemy on the screen, required method for game
-  
-    render(){
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 }
 
@@ -38,23 +50,9 @@ class Enemy{
 //////////////////////////////////////////////////////////////////////
 /**************************player constructor*************************/
 //////////////////////////////////////////////////////////////////////
-class Player{
-    constructor(x, y, speed){
-        this.sprite="images/char-boy.png";
-        this.x=x
-        this.y=y
-        this.speed=speed
-        //set player inital location
-        //
-    }
-    update(){
-        //similar to enemy
-
-    }
-    render(x, y){
-        //use code from enemy
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-
+class Player extends Character{
+    constructor(x, y, speed, imgSource ){
+        super(x, y, speed, imgSource);
     }
     handleInput(){
         /* Recall that the player cannot move off screen 
@@ -119,6 +117,5 @@ document.addEventListener('keyup', function(e) {
 
 // Place all enemy objects in an array called allEnemies
 const allEnemies=[];
-// Place the player object in a variable called player
-const player = new Player(200, 430, 10);
+const player = new Player(200, 430, 10, boy);
 player.render();
