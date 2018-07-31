@@ -55,20 +55,26 @@ class Player extends Character{
     handleInput (keyPressed){
         switch(keyPressed){
             case "up":
-                //coordinate
-                this.y -=83;
+                if(this.y>=0){
+                    this.y -=83;
+                }
                 break;
             case "down":
                 //coordinate
-                this.y += 83;
+                if(this.y<405){
+                    this.y += 83;
+                }
                 break;
             case "right":
-                //coordinate
-                this.x += 101;
+                if(this.x<402){
+                    this.x += 101;
+                }
                 break;
             case "left":
-                //coordinate
-                this.x -= 101;
+              
+                if(this.x>=0){
+                    this.x -= 101;
+                }
                 break;
             }
     }
