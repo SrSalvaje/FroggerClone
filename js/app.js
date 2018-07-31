@@ -1,8 +1,15 @@
 ///////////////////////////////////////////////////////////////////////////
 /**************************global variables*****************************/
 ///////////////////////////////////////////////////////////////////////////
-const boy = "images/char-boy.png";
-const evilBug="enemy-bug.png";
+const boy = "images/char-boy.png",
+ evilBug="images/enemy-bug.png",
+ topBorder=0,
+ bottomBorder=405,
+ leftBorder=0,
+ rightBorder=402,
+ vertStep=83,
+ latStep=101;
+
 
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
@@ -19,19 +26,23 @@ class Character{
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+    reset(){
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
 class Enemy extends Character{
-    constructor(x,y, speed, imgSource) {
+    constructor(x,y,speed,imgSource) {
         super(x,y,speed, imgSource);
     // Variables applied to each of our instances go here,
         //set enemy initial location
         //set enemy speed
     }
+    update(dt){
 
+    } 
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -55,25 +66,24 @@ class Player extends Character{
     handleInput (keyPressed){
         switch(keyPressed){
             case "up":
-                if(this.y>=0){
-                    this.y -=83;
+                if(this.y>=topBorder){
+                    this.y -=vertStep;
                 }
                 break;
             case "down":
                 //coordinate
-                if(this.y<405){
-                    this.y += 83;
+                if(this.y<bottomBorder){
+                    this.y += vertStep;
                 }
                 break;
             case "right":
-                if(this.x<402){
-                    this.x += 101;
+                if(this.x<rightBorder){
+                    this.x += latStep;
                 }
                 break;
             case "left":
-              
-                if(this.x>=0){
-                    this.x -= 101;
+                if(this.x>=leftBorder){
+                    this.x -= latStep;
                 }
                 break;
             }
@@ -123,7 +133,6 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
@@ -132,6 +141,17 @@ document.addEventListener('keyup', function(e) {
 ///////////////////////////////////////////////////////////////////////////
 
 // Place all enemy objects in an array called allEnemies
+//evilBugs
+
+/* ;
+
+allEnemies.push(e1); */
+const e1= new Enemy(0,0,10, evilBug)
 const allEnemies=[];
+allEnemies.push(e1);
+
+
+
+//player
 const player = new Player(200, 405, 10, boy);
 player.render();
