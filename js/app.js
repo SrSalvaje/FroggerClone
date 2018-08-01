@@ -63,27 +63,32 @@ class Player extends Character{
     }
     //render method inherited from Character class
     update(){
+       
     }
     handleInput (keyPressed){
         switch(keyPressed){
             case "up":
                 if(this.y >= 0){
                     this.y-=this.vertStep;
+                    console.log(player.y);
                 }
                 break;
             case "down":
                 if(this.y < this.bottomBorder){
                     this.y += this.vertStep;
+                    console.log(player.y);
                 }
                 break;
             case "right":
                 if(this.x < this.rightBorder){
                     this.x += this.sideStep;
+                    console.log(player.x);
                 }
                 break;
             case "left":
                 if(this.x >= this.topAndLeftBorder){
                     this.x -= this.sideStep;
+                    console.log(player.x);
                 }
                 break;
             }
