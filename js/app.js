@@ -16,11 +16,16 @@ class Character{
         this.topAndLeftBorder=0;
         this.bottomBorder=405;
         this.rightBorder=402;
+//properties used to set initial place for enemies 
+        this.topEnemy=73;
+        this.middleEnemy=this.topEnemy+83;
+        this.bottomEnemy=this.middleEnemy+83;
     }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
     reset(){
+
     }
 }
 
@@ -30,23 +35,18 @@ class Character{
 class Enemy extends Character{
     constructor(x,y, speed) {
         super(x,y, speed);
-         //properties used to set initial place for enemies 
-         this.topEnemy=60;
-         this.middleEnemy=this.topEnemy+this.downStep;
-         this.bottomEnemy=this.middleEnemy+this.downStep;
          //image to render
          this.sprite="images/enemy-bug.png";
-    // Variables applied to each of our instances go here,
-        //set enemy speed
     }
     update(dt){
         //this conditional moves and loops the enemy
-        if(this.x< this.rightBorder+101){
-            this.x+=this.speed*dt;
-            }else{
+        if(this.x< this.rightBorder+100){//checks that charachter is inside canvas
+            this.x+=this.speed*dt;//if so, it changes its value based on speed and dt
+            }else{//if charcter is outside canvas, it resets its x position to render just outside left border
                 this.x=-83;
             }
         }
+
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -63,7 +63,6 @@ class Player extends Character{
     }
     //render method inherited from Character class
     update(){
-
     }
 
     handleInput (keyPressed){
@@ -113,9 +112,11 @@ document.addEventListener('keyup', function(e) {
 ///////////////////////////////////////////////////////////////////////////
 
 //enemies
-const e1= new Enemy(0,60,100); //parameters: x, y and speed
+const e1= new Enemy(0,73,100);
 const allEnemies=[];
 allEnemies.push(e1);
+/* allEnemies.push(e2,e3); */
+
 
 
 //player
