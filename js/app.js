@@ -2,8 +2,8 @@
 /**************************global variables*****************************/
 ///////////////////////////////////////////////////////////////////////////
 const boy = "images/char-boy.png",
- evilBug="images/enemy-bug.png",
- topBorder=0,
+ evilBug="images/enemy-bug.png";
+/*  topBorder=0,
  bottomBorder=405,
  leftBorder=0,
  rightBorder=402,
@@ -12,7 +12,7 @@ const boy = "images/char-boy.png",
  eTop=60,
  eMiddle=eTop+vertStep,
  eBottom=eMiddle+vertStep;
-
+ */
 
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
@@ -24,7 +24,20 @@ class Character{
         this.x=x;
         this.y=y;
         this.speed=speed;
-
+      /*   //properties used to move player
+        this.rightStep=101;
+        this.leftStep=-101;
+        this.upStep=-83;
+        this.downStep=83; */
+        //porperties used to keep charachter on canvas
+        this.topAndLeftBorder=0;
+        this.bottomBorder=405;
+        this.rightBorder=402;
+       /*  //properties used to set initial place for enemies 
+        this.topEnemy=60;
+        this.middleEnemy=this.topEnemy+this.downStep;
+        this.bottomEnemy=this.middleEnemy+this.downStep;
+ */
     }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -39,11 +52,17 @@ class Character{
 class Enemy extends Character{
     constructor(x,y, speed,imgSource) {
         super(x,y, speed, imgSource);
+         //properties used to set initial place for enemies 
+         this.topEnemy=60;
+         this.middleEnemy=this.topEnemy+this.downStep;
+         this.bottomEnemy=this.middleEnemy+this.downStep;
+ 
     // Variables applied to each of our instances go here,
         //set enemy initial location
         //set enemy speed
     }
     update(dt){
+        //this conditional moves and loops the enemy
         if(this.x<rightBorder+101){
             this.x+=this.speed*dt;
             }else{
@@ -64,6 +83,10 @@ class Enemy extends Character{
 class Player extends Character{
     constructor(x, y,speed,imgSource ){
         super(x, y,speed,imgSource);
+        this.rightStep=101;
+        this.leftStep=-101;
+        this.upStep=-83;
+        this.downStep=83;
     }
     //render method inherited from Character class
     update(){
