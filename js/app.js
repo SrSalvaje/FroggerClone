@@ -1,43 +1,21 @@
 ///////////////////////////////////////////////////////////////////////////
 /**************************global variables*****************************/
 ///////////////////////////////////////////////////////////////////////////
-const boy = "images/char-boy.png",
- evilBug="images/enemy-bug.png";
-/*  topBorder=0,
- bottomBorder=405,
- leftBorder=0,
- rightBorder=402,
- vertStep=83,
- latStep=101,
- eTop=60,
- eMiddle=eTop+vertStep,
- eBottom=eMiddle+vertStep;
- */
+
 
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(x, y, speed=0, imgSource){
-        this.sprite=`${imgSource}`;
+    constructor(x, y, speed=0){
         this.x=x;
         this.y=y;
         this.speed=speed;
-      /*   //properties used to move player
-        this.rightStep=101;
-        this.leftStep=-101;
-        this.upStep=-83;
-        this.downStep=83; */
         //porperties used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=405;
         this.rightBorder=402;
-       /*  //properties used to set initial place for enemies 
-        this.topEnemy=60;
-        this.middleEnemy=this.topEnemy+this.downStep;
-        this.bottomEnemy=this.middleEnemy+this.downStep;
- */
     }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -50,43 +28,38 @@ class Character{
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
 class Enemy extends Character{
-    constructor(x,y, speed,imgSource) {
-        super(x,y, speed, imgSource);
+    constructor(x,y, speed) {
+        super(x,y, speed);
          //properties used to set initial place for enemies 
          this.topEnemy=60;
          this.middleEnemy=this.topEnemy+this.downStep;
          this.bottomEnemy=this.middleEnemy+this.downStep;
- 
+         //image to render
+         this.sprite="images/enemy-bug.png";
     // Variables applied to each of our instances go here,
-        //set enemy initial location
         //set enemy speed
     }
     update(dt){
         //this conditional moves and loops the enemy
-        if(this.x<rightBorder+101){
+        if(this.x< this.rightBorder+101){
             this.x+=this.speed*dt;
             }else{
-                this.x=0-latStep;
+                this.x=-83;
             }
         }
 }
-
-/////////////////////////////////////////////////////////////////////////
-/**************************Enemy fucntions*****************************/
-////////////////////////////////////////////////////////////////////////
-
-
 
 //////////////////////////////////////////////////////////////////////
 /**************************player constructor*************************/
 //////////////////////////////////////////////////////////////////////
 class Player extends Character{
-    constructor(x, y,speed,imgSource ){
-        super(x, y,speed,imgSource);
-        this.rightStep=101;
-        this.leftStep=-101;
-        this.upStep=-83;
-        this.downStep=83;
+    constructor(x, y,speed){
+        super(x, y,speed);
+        //properties used to move characher, for 'left' and/or 'up' value must be preceded by '-'
+        this.sideStep=101;
+        this.vertStep=83;
+        //image to render
+        this.sprite="images/char-boy.png";
     }
     //render method inherited from Character class
     update(){
@@ -96,24 +69,23 @@ class Player extends Character{
     handleInput (keyPressed){
         switch(keyPressed){
             case "up":
-                if(this.y>=topBorder){
-                    this.y -=vertStep;
+                if(this.y >= 0){
+                    this.y-=this.vertStep;
                 }
                 break;
             case "down":
-                //coordinate
-                if(this.y<bottomBorder){
-                    this.y += vertStep;
+                if(this.y < this.bottomBorder){
+                    this.y += this.vertStep;
                 }
                 break;
             case "right":
-                if(this.x<rightBorder){
-                    this.x += latStep;
+                if(this.x < this.rightBorder){
+                    this.x += this.sideStep;
                 }
                 break;
             case "left":
-                if(this.x>=leftBorder){
-                    this.x -= latStep;
+                if(this.x >= this.topAndLeftBorder){
+                    this.x -= this.sideStep;
                 }
                 break;
             }
@@ -140,36 +112,25 @@ document.addEventListener('keyup', function(e) {
 /***********************instantiate your objects**************************/
 ///////////////////////////////////////////////////////////////////////////
 
-// Place all enemy objects in an array called allEnemies
-//evilBugs
-
-/* ;
-
-allEnemies.push(e1); */
-const e1= new Enemy(0,60,100, evilBug);
-
+//enemies
+const e1= new Enemy(0,60,100); //parameters: x, y and speed
 const allEnemies=[];
 allEnemies.push(e1);
 
 
-
 //player
-const player = new Player(200, 405,0, boy);
+const player = new Player(200, 405,0); //parameters: x, y and speed
 player.render();
 
 
 ///////////////////////////////////////////////////////////////////////////
-/******************************player functions***************************/
-///////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////
 /*********************************Gems************************************/
 ///////////////////////////////////////////////////////////////////////////
+
 //////////////////////////////////////////////////////////////////////////
 /****************************************lives****************************/
 ///////////////////////////////////////////////////////////////////////////
+
 /////////////////////////////////////////////////////////////////////////////
 /*******************************score**************************************/
-////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////
-/************************************shared functions***********************/
 ////////////////////////////////////////////////////////////////////////////
