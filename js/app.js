@@ -63,6 +63,11 @@ class Player extends Character{
     }
     //render method inherited from Character class
     update(){
+        for(let enemy of allEnemies){
+            if(enemy.x===player.x){
+                console.log("horizontal clash");
+            }
+        }
        
     }
     handleInput (keyPressed){
