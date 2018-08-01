@@ -8,18 +8,18 @@
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(x, y, speed=0){
+    constructor(speed=0, x, yPos={playerY:405, topEnemy:73, middleEnemy:156, bottomEnemy:239}){
         this.x=x;
-        this.y=y;
+        this.yPos=yPos;
+        this.y=null;
         this.speed=speed;
         //porperties used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=405;
         this.rightBorder=402;
-//properties used to set initial place for enemies 
-        this.topEnemy=73;
-        this.middleEnemy=this.topEnemy+83;
-        this.bottomEnemy=this.middleEnemy+83;
+    }
+    setPos(pos){
+        this.y=this.yPos[pos];
     }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -33,8 +33,8 @@ class Character{
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
 class Enemy extends Character{
-    constructor(x,y, speed) {
-        super(x,y, speed);
+    constructor(speed,x,yPos) {
+        super(speed,x,yPos);
          //image to render
          this.sprite="images/enemy-bug.png";
     }
@@ -53,8 +53,8 @@ class Enemy extends Character{
 /**************************player constructor*************************/
 //////////////////////////////////////////////////////////////////////
 class Player extends Character{
-    constructor(x, y,speed){
-        super(x, y,speed);
+    constructor(speed,x,yPos){
+        super(speed,x,yPos);
         //properties used to move characher, for 'left' and/or 'up' value must be preceded by '-'
         this.sideStep=101;
         this.vertStep=83;
@@ -64,7 +64,7 @@ class Player extends Character{
     //render method inherited from Character class
     update(){
     }
-
+   
     handleInput (keyPressed){
         switch(keyPressed){
             case "up":
@@ -112,7 +112,8 @@ document.addEventListener('keyup', function(e) {
 ///////////////////////////////////////////////////////////////////////////
 
 //enemies
-const e1= new Enemy(0,73,100);
+const e1= new Enemy(100,73);
+e1.setPos('topEnemy');
 const allEnemies=[];
 allEnemies.push(e1);
 /* allEnemies.push(e2,e3); */
@@ -120,7 +121,8 @@ allEnemies.push(e1);
 
 
 //player
-const player = new Player(200, 405,0); //parameters: x, y and speed
+const player = new Player(0,200); //parameters: x, y and speed = speed, x, ypos
+player.setPos('playerY');
 player.render();
 
 
