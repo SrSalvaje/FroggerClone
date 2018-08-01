@@ -109,11 +109,16 @@ document.addEventListener('keyup', function(e) {
 ///////////////////////////////////////////////////////////////////////////
 /***********************instantiate your objects**************************/
 ///////////////////////////////////////////////////////////////////////////
+/* function createEnemy(num){
 
+} */
 //enemies
-const e1= new Enemy('topEnemy',100,'enemyX');
-const allEnemies=[];
-allEnemies.push(e1);
+const e1= new Enemy('topEnemy',100,'enemyX'),
+e2=new Enemy('middleEnemy',200,'enemyX'),
+e3=new Enemy('bottomEnemy',150,'enemyX');
+
+ const allEnemies=[e1,e2,e3];
+/* allEnemies.push(e1); */
 /* allEnemies.push(e2,e3); */
 
 
