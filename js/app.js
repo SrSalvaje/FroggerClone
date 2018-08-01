@@ -61,13 +61,19 @@ class Player extends Character{
         this.sprite="images/char-boy.png";
 
     }
-    //render method inherited from Character class
     update(){
-        for(let enemy of allEnemies){
-            if(enemy.x===player.x){
-                console.log("horizontal clash");
+
+       
+        //////////check for x and y//////////////
+         for(let enemy of allEnemies) {
+
+            if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
+                alert("clash");
             }
         }
+     
+         
+   
        
     }
     handleInput (keyPressed){
@@ -75,25 +81,21 @@ class Player extends Character{
             case "up":
                 if(this.y >= 0){
                     this.y-=this.vertStep;
-                    console.log(`current y:${player.y}`);
                 }
                 break;
             case "down":
                 if(this.y < this.bottomBorder){
                     this.y += this.vertStep;
-                    console.log(`current y:${player.y}`);
                 }
                 break;
             case "right":
                 if(this.x < this.rightBorder){
                     this.x += this.sideStep;
-                    console.log(`current x:${player.x}`);
                 }
                 break;
             case "left":
                 if(this.x >= this.topAndLeftBorder){
                     this.x -= this.sideStep;
-                    console.log(`current x:${player.x}`);
                 }
                 break;
             }
@@ -123,13 +125,12 @@ document.addEventListener('keyup', function(e) {
 
 } */
 //enemies
-const e1= new Enemy('topEnemy',100,'enemyX'),
+const e1= new Enemy('topEnemy',100,'enemyX');
 e2=new Enemy('middleEnemy',200,'enemyX'),
 e3=new Enemy('bottomEnemy',150,'enemyX');
 
- const allEnemies=[e1,e2,e3];
-/* allEnemies.push(e1); */
-/* allEnemies.push(e2,e3); */
+ const allEnemies=[e1 ,e2,e3];
+
 
 
 
