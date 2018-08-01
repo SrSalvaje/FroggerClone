@@ -62,19 +62,19 @@ class Player extends Character{
 
     }
     update(){
-
-       
-        //////////check for x and y//////////////
+        //////////check for x and y collision//////////////
          for(let enemy of allEnemies) {
-
             if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
-                alert("clash");
+               this.reset();///player goes back to start
+            }else if(this.y===-10){
+                this.reset();
             }
-        }
-     
-         
-   
-       
+        } 
+    }
+    reset(){
+        this.x=this.startPos["playerX"];
+        this.y=this.startPos["playerY"];
+
     }
     handleInput (keyPressed){
         switch(keyPressed){
