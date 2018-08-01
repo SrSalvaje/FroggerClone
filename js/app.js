@@ -66,7 +66,7 @@ class Player extends Character{
          for(let enemy of allEnemies) {
             if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
                this.reset();///player goes back to start
-            }else if(this.y===-10){
+            }else if(this.y===-10){//if player reaches water
                 this.reset();
             }
         } 
