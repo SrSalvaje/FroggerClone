@@ -1,3 +1,56 @@
 body {
     text-align: center;
+    width: 100%;
+}
+
+.scoreboard{
+    font: 80 20px "Open Sans", sans-serif;
+}
+/************************* Grid Stuff******************************* */
+.myGrid{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows:  100%;
+}
+
+.row1{
+    grid-area: 1/1/2/2; /* row/column/row/column */
+
+}
+
+.row2{
+    grid-area: 2/1/3/2;
+}
+
+/************************************** score grid stuff *******************/
+.level{
+
+}
+
+.lives{
+
+}
+
+.score{
+
+}
+
+.time{
+
+}
+
+/********************** end of score grid****************************** */
+.row3{
+    grid-area: 3/1/4/2;
+
+}
+
+.row4{
+    grid-area: 4/1/5/2;
+
+}
+
+.row5{
+    grid-area: 5/1/6/2;
+
 }

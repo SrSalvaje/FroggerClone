@@ -65,13 +65,11 @@ class Player extends Character{
         //////////check for x and y collision//////////////
          for(let enemy of allEnemies) {
             if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
-                
                 for(let enemy of allEnemies){//stops enemy movement
                     enemy.speed=0;
                 }
-
-                setTimeout(() => {  /// after 1 sec player goes back to start
-                    this.reset();
+                setTimeout(() => {  /// after 1 sec game reloads 
+                    window.location.reload();
                 }, 1000);
                
             }else if(this.y===-10){//if player reaches water
