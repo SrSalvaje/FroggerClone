@@ -19,7 +19,7 @@ class Character{
         //porperties used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
-        this.rightBorder=705;
+        this.rightBorder=604;
     }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
