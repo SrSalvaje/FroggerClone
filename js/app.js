@@ -123,6 +123,16 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+///keeps screen from scrolling///////////
+window.addEventListener("keydown", function(e) {
+    var allowedKeys = {
+        37: 'left',
+        38: 'up',
+        39: 'right',
+        40: 'down'
+    };
+        e.preventDefault();
+    });
 
 ///////////////////////////////////////////////////////////////////////////
 /***********************instantiate your objects**************************/
