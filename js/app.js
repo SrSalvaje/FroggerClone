@@ -1,3 +1,4 @@
+"use strict";
 ///////////////////////////////////////////////////////////////////////////
 /**************************global variables*****************************/
 ///////////////////////////////////////////////////////////////////////////
@@ -45,7 +46,6 @@ class Enemy extends Character{
                 this.x=-83;
             }
         }
-
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -65,7 +65,15 @@ class Player extends Character{
         //////////check for x and y collision//////////////
          for(let enemy of allEnemies) {
             if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
-               this.reset();///player goes back to start
+                
+                for(let enemy of allEnemies){//stops enemy movement
+                    enemy.speed=0;
+                }
+
+                setTimeout(() => {  /// after 1 sec player goes back to start
+                    this.reset();
+                }, 1000);
+               
             }else if(this.y===-10){//if player reaches water
                 this.reset();
             }
@@ -125,7 +133,7 @@ document.addEventListener('keyup', function(e) {
 
 } */
 //enemies
-const e1= new Enemy('topEnemy',100,'enemyX');
+const e1= new Enemy('topEnemy',100,'enemyX'),
 e2=new Enemy('middleEnemy',200,'enemyX'),
 e3=new Enemy('bottomEnemy',150,'enemyX');
 
