@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, speed=0, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ topEnemy:73, middleEnemy:156, bottomEnemy:239, enemyX:0}){
+    constructor(yPos, speed=0, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ topEnemy:73, middleEnemy:156, bottomEnemy:239, enemyX:-101}){
         this.startPos=startPos;
         this.xPos=xPos;
         this.x=startPos[xPos];
