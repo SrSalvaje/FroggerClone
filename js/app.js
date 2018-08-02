@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, speed=0, xPos, startPos={/* player */playerY:405, playerX:200,/* Enemy */ topEnemy:73, middleEnemy:156, bottomEnemy:239, enemyX:0}){
+    constructor(yPos, speed=0, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ topEnemy:73, middleEnemy:156, bottomEnemy:239, enemyX:0}){
         this.startPos=startPos;
         this.xPos=xPos;
         this.x=startPos[xPos];
@@ -18,7 +18,7 @@ class Character{
         this.speed=speed;
         //porperties used to keep charachter on canvas
         this.topAndLeftBorder=0;
-        this.bottomBorder=405;
+        this.bottomBorder=607;
         this.rightBorder=705;
     }
     render(){
