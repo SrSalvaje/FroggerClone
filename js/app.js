@@ -139,35 +139,43 @@ class Gems extends Character{
         this.maxX=maxX;
         this.minY=minY;
         this.maxY=maxY;
-        Gems.generateX();
-        Gems.generateY();
-        this.randomX=Character.randomSpeed(0, this.xCoordinates.length);
-        this.randomY=Character.randomSpeed(0, this.yCoordinates.length);
+        this.randomY=Gems.generateY(this.minY, this.maxY);
+        this.y=this.randomY;
+        this.randomx=Gems.generateX(this.minX, this.maxX);
+        this.x= this.randomx;
         this.gemType=["images/Gem Blue.png",
                     "images/Gem Green.png", 
                     "images/Gem Orange.png",     
                     "images/Heart.png", 
-                    "images/Star.png"]
-        this.randomSprite=Character.randomSpeed(0,this.gemType.length)
-        this.yPos=this.yCoordinates[this.randomY];
-        this.xPos=this.xCoordinates[this.randomX];
+                    "images/Star.png"];
+        this.randomSprite=Character.randomSpeed(0,this.gemType.length);
+        
         this.sprite=this.gemType[this.randomSprite];
-        
-        
-       
-       
+    }
+
+    update(){
 
     }
     //programatically generates all the x and y coordinates
-   static generateX(){
-       for(this.minX; this.minX<=this.maxX; this.minX+=101){
-        this.xCoordinates.push(this.minX);
+   static generateX(minX, maxX){
+        const xCoordinates=[];
+       for(minX; minX<=maxX; minX+=101){
+            xCoordinates.push(minX);
         }
+       
+       let randomIndex=Character.randomSpeed(0, xCoordinates.length);
+       return xCoordinates[randomIndex];
+
     }
-    static generateY(){ for(this.minY;this.minY<=this.maxY;this.minY+=83){ 
-        this.yCoordinates.push(this.minY);
+    static generateY(minY, maxY){ 
+        const yCoordinates=[];
+        for(minY;minY<=maxY;minY+=83){ 
+        yCoordinates.push(minY);
         }
+        let randomIndex= Character.randomSpeed(0, yCoordinates.length);
+        return yCoordinates[randomIndex];
     }
+    
 }
 
 
@@ -212,13 +220,13 @@ e5=new Enemy('r5','enemyX'),
 e6=new Enemy('r6','enemyX'),
 e7=new Enemy('r7','enemyX');
 
-const allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7,e6 ];
+const allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7];
 
 //player
 const player = new Player('playerY','playerX'); //parameters: ypos, xpos
 player.render();
-debugger
-const g2= new Gems(-2, 604, 73, 571);
+
+const g2 = new Gems(-2, 604, 73, 571);
 g2.render();
 
 //////////////////////////////////////////////////////////////////////////
