@@ -123,31 +123,27 @@ class Player extends Character{
 ///////////////////////////////////////////////////////////////////////////
 /*********************************Gems************************************/
 ///////////////////////////////////////////////////////////////////////////
-//this.speed=Character.randomSpeed(speed["min"], speed["max"]);
+
 
 /* x range: -2 to 604 with  incrememnts of 101
    y range: 73 to 571 with increments of 83 */
 class Gems extends Character{
     constructor(minX, maxX, minY, maxY, yPos,xPos,speed,startPos){
         super(yPos, xPos, speed, startPos);
-        this.xCoordinates=[];
-        this.yCoordinates=[];
         this.minX=minX;
         this.maxX=maxX;
         this.minY=minY;
         this.maxY=maxY;
-        this.randomY=Gems.generateY(this.minY, this.maxY);
-        this.y=this.randomY;
-        this.randomx=Gems.generateX(this.minX, this.maxX);
-        this.x= this.randomx;
+        this.y=Gems.generateY(this.minY, this.maxY);
+        this.x= Gems.generateX(this.minX, this.maxX);
         this.gemType=["images/Gem Blue.png",
                     "images/Gem Green.png", 
                     "images/Gem Orange.png",     
                     "images/Heart.png", 
                     "images/Star.png"];
-        this.randomSprite=Character.randomSpeed(0,this.gemType.length);
         
-        this.sprite=this.gemType[this.randomSprite];
+        
+        this.sprite=this.gemType[Character.randomSpeed(0,this.gemType.length)];
     }
 
     update(){
@@ -221,10 +217,10 @@ const allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7];
 
 //player
 const player = new Player('playerY','playerX'); //parameters: ypos, xpos
-/* player.render(); */
+
 
 const g2 = new Gems(-2, 604, 73, 571);
-g2.render();
+
 
 //////////////////////////////////////////////////////////////////////////
 /****************************************lives****************************/
