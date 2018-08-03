@@ -9,13 +9,13 @@
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, speed=0, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571,  enemyX:-101}){
+    constructor(yPos, xPos,  speed={min:100, max:350}, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571,  enemyX:-101}){
         this.startPos=startPos;
         this.xPos=xPos;
         this.x=startPos[xPos];
         this.yPos=yPos;
         this.y=startPos[yPos]
-        this.speed=speed;
+        this.speed=Character.randomSpeed(speed["min"], speed["max"]);
         //porperties used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
@@ -24,8 +24,9 @@ class Character{
     static randomSpeed(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+        return  Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
       }
+
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -38,8 +39,8 @@ class Character{
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
 class Enemy extends Character{
-    constructor(yPos, speed,xPos,startPos) {
-        super(yPos,speed,xPos,startPos);
+    constructor(yPos,xPos, speed, startPos) {
+        super(yPos,xPos,speed, startPos);
          //image to render
          this.sprite="images/enemy-bug.png";
     }
@@ -51,20 +52,14 @@ class Enemy extends Character{
                 this.x=-83;
             }
         }
-    /* getRandomSpeed(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            speed=Math.floor(Math.random() * (max - min)) + min;
-            return speed; 
-          } */
 }
 
 //////////////////////////////////////////////////////////////////////
 /**************************player constructor*************************/
 //////////////////////////////////////////////////////////////////////
 class Player extends Character{
-    constructor(yPos,speed,xPos,startPos){
-        super(yPos, speed,xPos,startPos);
+    constructor(yPos, xPos, speed,startPos){
+        super(yPos, xPos, speed,startPos);
         //properties used to move characher, for 'left' and/or 'up' value must be preceded by '-'
         this.sideStep=101;
         this.vertStep=83;
@@ -152,13 +147,14 @@ window.addEventListener("keydown", function(e) {
 
 } */
 //enemies
-const e1= new Enemy('r1',100,'enemyX'),
-e2=new Enemy('r2',200,'enemyX'),
-e3=new Enemy('r3',150,'enemyX'),
-e4=new Enemy('r4',250,'enemyX'),
-e5=new Enemy('r5',300,'enemyX'),
-e6=new Enemy('r6',190,'enemyX'),
-e7=new Enemy('r7',100,'enemyX');
+
+const e1= new Enemy('r1','enemyX'),
+e2=new Enemy('r2','enemyX'),
+e3=new Enemy('r3','enemyX'),
+e4=new Enemy('r4','enemyX'),
+e5=new Enemy('r5','enemyX'),
+e6=new Enemy('r6','enemyX'),
+e7=new Enemy('r7','enemyX');
 
  const allEnemies=[e1 ,e2,e3,e4,e5,e6,e7,e6];
 
