@@ -22,6 +22,9 @@ class Character{
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
         this.rightBorder=604;
+
+        this.sideStep=101;
+        this.vertStep=83;
     }
     //function based on 'getRandomInt' of MDN web docs @
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
@@ -65,8 +68,7 @@ class Player extends Character{
     constructor(yPos, xPos, speed,startPos){
         super(yPos, xPos, speed,startPos);
         //properties used to move characher, to move 'left' and/or 'up' value must be preceded by '-'
-        this.sideStep=101;
-        this.vertStep=83;
+       
         //image to render
         this.sprite="images/char-boy.png";
 
@@ -124,39 +126,48 @@ class Player extends Character{
 ///////////////////////////////////////////////////////////////////////////
 /*********************************Gems************************************/
 ///////////////////////////////////////////////////////////////////////////
+//this.speed=Character.randomSpeed(speed["min"], speed["max"]);
+
+/* x range: -2 to 604 with  incrememnts of 101
+   y range: 73 to 571 with increments of 83 */
 class Gems extends Character{
-    constructor(yPos,xPos,gemType,speed,startPos, 
-        color={ blue:"images/Blue.png", green:"images/Green.png", orange:"images/Orange.png", 
-                heart:"images/Heart.png", star:"images/Star.png"}){
+    constructor(minX, maxX, minY, maxY, yPos,xPos,speed,startPos){
         super(yPos, xPos, speed, startPos);
-        this.gemType=color[gemType];
-        this.sprite=this.gemType;
+        this.xCoordinates=[];
+        this.yCoordinates=[];
+        this.minX=minX;
+        this.maxX=maxX;
+        this.minY=minY;
+        this.maxY=maxY;
+        Gems.generateX();
+        Gems.generateY();
+        this.randomX=Character.randomSpeed(0, this.xCoordinates.length);
+        this.randomY=Character.randomSpeed(0, this.yCoordinates.length);
+        this.gemType=["images/Gem Blue.png",
+                    "images/Gem Green.png", 
+                    "images/Gem Orange.png",     
+                    "images/Heart.png", 
+                    "images/Star.png"]
+        this.randomSprite=Character.randomSpeed(0,this.gemType.length)
+        this.yPos=this.yCoordinates[this.randomY];
+        this.xPos=this.xCoordinates[this.randomX];
+        this.sprite=this.gemType[this.randomSprite];
+        
+        
+       
+       
+
     }
-   
     //programatically generates all the x and y coordinates
    static generateX(){
-       for(minX;minX<=maxX;minX+=xInc){
-        xCoordinates.push(minX);
+       for(this.minX; this.minX<=this.maxX; this.minX+=101){
+        this.xCoordinates.push(this.minX);
         }
     }
-    static generateY(){ for(minY;minY<=maxY;minY+=yInc){ 
-        yCoordinates.push(minY);
+    static generateY(){ for(this.minY;this.minY<=this.maxY;this.minY+=83){ 
+        this.yCoordinates.push(this.minY);
         }
     }
-
-    //shufles the coordinate arrays
-    static shuffle(array) {
-        let currentIndex = array.length, temporaryValue, randomIndex;
-        while (currentIndex !== 0) {
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
-        }
-        return array;
-    }
-
 }
 
 
@@ -201,16 +212,14 @@ e5=new Enemy('r5','enemyX'),
 e6=new Enemy('r6','enemyX'),
 e7=new Enemy('r7','enemyX');
 
-const allEnemies=[/* e1 ,e2,e3,e4,e5,e6,e7,e6 */];
+const allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7,e6 ];
 
 //player
 const player = new Player('playerY','playerX'); //parameters: ypos, xpos
 player.render();
-
-
-///////////////////////////////////////////////////////////////////////////
-/*********************************Gems************************************/
-///////////////////////////////////////////////////////////////////////////
+debugger
+const g2= new Gems(-2, 604, 73, 571);
+g2.render();
 
 //////////////////////////////////////////////////////////////////////////
 /****************************************lives****************************/
@@ -220,24 +229,18 @@ player.render();
 /*******************************score**************************************/
 ////////////////////////////////////////////////////////////////////////////
 
-/* x range: -2 to 604 with  incrememnts of 101
-   y range: 73 to 571 with increments of 83 */
-
-   let minX=-2, 
-   maxX=604, 
-   minY=73, 
-   maxY=571, 
-   xInc= 101, 
-   yInc=83,
-   yCoordinates=[],
-   xCoordinates=[];
-
-   for(let i=1;i<50;i++){
-
-     
-
-   }
 
  
+ 
    
-   
+/* static shuffle(array) {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+    }
+    return array;
+} */
