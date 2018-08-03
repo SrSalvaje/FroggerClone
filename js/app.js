@@ -4,7 +4,8 @@
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, xPos,  speed={min:100, max:350}, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571,  enemyX:-101}){
+    constructor(yPos, xPos,  speed={min:100, max:350}, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571, enemyX:-101,
+    /* gems*/ }){
         //xPos and yPos are the only paraemters needed by Enemy and Player classes, 
         //rest of the parameters are assigned by Character constructor
         this.xPos=xPos;
@@ -14,7 +15,7 @@ class Character{
         //Takes the numeric value stored in StartPos based on the string of xPos and yPos;the only two parameters 
         //needed by Player and Enemy
         this.x=startPos[xPos];
-        this.y=startPos[yPos]
+        this.y=startPos[yPos];
         //generates a random speed value
         this.speed=Character.randomSpeed(speed["min"], speed["max"]);
         //porperties used to keep charachter on canvas
@@ -96,26 +97,70 @@ class Player extends Character{
             case "up":
                 if(this.y >= 0){
                     this.y-=this.vertStep;
+                    console.log(this.x, this.y);
                 }
                 break;
             case "down":
                 if(this.y < this.bottomBorder){
                     this.y += this.vertStep;
+                    console.log(this.x, this.y);
                 }
                 break;
             case "right":
                 if(this.x < this.rightBorder){
                     this.x += this.sideStep;
+                    console.log(this.x, this.y);
                 }
                 break;
             case "left":
                 if(this.x >= this.topAndLeftBorder){
                     this.x -= this.sideStep;
+                    console.log(this.x, this.y);
                 }
                 break;
             }
     }
 }    
+///////////////////////////////////////////////////////////////////////////
+/*********************************Gems************************************/
+///////////////////////////////////////////////////////////////////////////
+class Gems extends Character{
+    constructor(yPos,xPos,gemType,speed,startPos, 
+        color={ blue:"images/Blue.png", green:"images/Green.png", orange:"images/Orange.png", 
+                heart:"images/Heart.png", star:"images/Star.png"}){
+        super(yPos, xPos, speed, startPos);
+        this.gemType=color[gemType];
+        this.sprite=this.gemType;
+    }
+   
+    //programatically generates all the x and y coordinates
+   static generateX(){
+       for(minX;minX<=maxX;minX+=xInc){
+        xCoordinates.push(minX);
+        }
+    }
+    static generateY(){ for(minY;minY<=maxY;minY+=yInc){ 
+        yCoordinates.push(minY);
+        }
+    }
+
+    //shufles the coordinate arrays
+    static shuffle(array) {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+        while (currentIndex !== 0) {
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        return array;
+    }
+
+}
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 /******************************event listeners*******************************/
@@ -156,7 +201,7 @@ e5=new Enemy('r5','enemyX'),
 e6=new Enemy('r6','enemyX'),
 e7=new Enemy('r7','enemyX');
 
-const allEnemies=[e1 ,e2,e3,e4,e5,e6,e7,e6];
+const allEnemies=[/* e1 ,e2,e3,e4,e5,e6,e7,e6 */];
 
 //player
 const player = new Player('playerY','playerX'); //parameters: ypos, xpos
@@ -175,3 +220,24 @@ player.render();
 /*******************************score**************************************/
 ////////////////////////////////////////////////////////////////////////////
 
+/* x range: -2 to 604 with  incrememnts of 101
+   y range: 73 to 571 with increments of 83 */
+
+   let minX=-2, 
+   maxX=604, 
+   minY=73, 
+   maxY=571, 
+   xInc= 101, 
+   yInc=83,
+   yCoordinates=[],
+   xCoordinates=[];
+
+   for(let i=1;i<50;i++){
+
+     
+
+   }
+
+ 
+   
+   
