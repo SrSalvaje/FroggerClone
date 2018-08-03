@@ -96,7 +96,7 @@ var Engine = (function(global) {
         });
         player.update();
     }
-
+    
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -143,7 +143,11 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+        player.render();
+        g2.render();
+        
     }
+    
 
     /* This function is called by the render function and is called on each game
      * tick. Its purpose is to then call the render functions you have defined
@@ -156,10 +160,8 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
-        player.render();
     }
-
+    
     /* This function does nothing but it could have been a good place to
      * handle game reset states - maybe a new game menu or a game over screen
      * those sorts of things. It's only called once by the init() method.
@@ -177,7 +179,12 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        "images/Gem Blue.png",
+        "images/Gem Green.png", 
+        "images/Gem Orange.png",     
+        "images/Heart.png", 
+        "images/Star.png"
     ]);
     Resources.onReady(init);
 

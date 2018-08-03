@@ -37,9 +37,6 @@ class Character{
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-    reset(){
-
-    }
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -224,7 +221,7 @@ const allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7];
 
 //player
 const player = new Player('playerY','playerX'); //parameters: ypos, xpos
-player.render();
+/* player.render(); */
 
 const g2 = new Gems(-2, 604, 73, 571);
 g2.render();
