@@ -141,8 +141,6 @@ class Gems extends Character{
                     "images/Gem Orange.png",     
                     "images/Heart.png", 
                     "images/Star.png"];
-        
-        
         this.sprite=this.gemType[Character.randomSpeed(0,this.gemType.length)];
     }
 
