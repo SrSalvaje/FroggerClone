@@ -21,6 +21,11 @@ class Character{
         this.bottomBorder=607;
         this.rightBorder=604;
     }
+    static randomSpeed(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+      }
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
