@@ -162,7 +162,7 @@ e7=new Enemy('r7','enemyX');
 
 
 //player
-const player = new Player('playerY',0,'playerX'); //parameters: ypos, speed, xpos
+const player = new Player('playerY','playerX'); //parameters: ypos, xpos
 player.render();
 
 
