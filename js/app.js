@@ -9,7 +9,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, speed=0, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ topEnemy:73, middleEnemy:156, bottomEnemy:239, enemyX:-101}){
+    constructor(yPos, speed=0, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571,  enemyX:-101}){
         this.startPos=startPos;
         this.xPos=xPos;
         this.x=startPos[xPos];
@@ -46,6 +46,12 @@ class Enemy extends Character{
                 this.x=-83;
             }
         }
+    /* getRandomSpeed(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            speed=Math.floor(Math.random() * (max - min)) + min;
+            return speed; 
+          } */
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -141,11 +147,15 @@ window.addEventListener("keydown", function(e) {
 
 } */
 //enemies
-const e1= new Enemy('topEnemy',100,'enemyX'),
-e2=new Enemy('middleEnemy',200,'enemyX'),
-e3=new Enemy('bottomEnemy',150,'enemyX');
+const e1= new Enemy('r1',100,'enemyX'),
+e2=new Enemy('r2',200,'enemyX'),
+e3=new Enemy('r3',150,'enemyX'),
+e4=new Enemy('r4',250,'enemyX'),
+e5=new Enemy('r5',300,'enemyX'),
+e6=new Enemy('r6',190,'enemyX'),
+e7=new Enemy('r7',100,'enemyX');
 
- const allEnemies=[e1 ,e2,e3];
+ const allEnemies=[e1 ,e2,e3,e4,e5,e6,e7,e6];
 
 
 
@@ -166,3 +176,4 @@ player.render();
 /////////////////////////////////////////////////////////////////////////////
 /*******************************score**************************************/
 ////////////////////////////////////////////////////////////////////////////
+
