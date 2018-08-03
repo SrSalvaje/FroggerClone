@@ -1,30 +1,33 @@
 "use strict";
-///////////////////////////////////////////////////////////////////////////
-/**************************global variables*****************************/
-///////////////////////////////////////////////////////////////////////////
-
-
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
     constructor(yPos, xPos,  speed={min:100, max:350}, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571,  enemyX:-101}){
-        this.startPos=startPos;
+        //xPos and yPos are the only paraemters needed by Enemy and Player classes, 
+        //rest of the parameters are assigned by Character constructor
         this.xPos=xPos;
-        this.x=startPos[xPos];
         this.yPos=yPos;
+        //this object holds all needed positions, I chose this format in order to make it scalable
+        this.startPos=startPos;
+        //Takes the numeric value stored in StartPos based on the string of xPos and yPos;the only two parameters 
+        //needed by Player and Enemy
+        this.x=startPos[xPos];
         this.y=startPos[yPos]
+        //generates a random speed value
         this.speed=Character.randomSpeed(speed["min"], speed["max"]);
         //porperties used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
         this.rightBorder=604;
     }
+    //function based on 'getRandomInt' of MDN web docs @
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     static randomSpeed(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
-        return  Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+        return  Math.floor(Math.random() * (max - min)) + min; 
       }
 
     render(){
@@ -60,7 +63,7 @@ class Enemy extends Character{
 class Player extends Character{
     constructor(yPos, xPos, speed,startPos){
         super(yPos, xPos, speed,startPos);
-        //properties used to move characher, for 'left' and/or 'up' value must be preceded by '-'
+        //properties used to move characher, to move 'left' and/or 'up' value must be preceded by '-'
         this.sideStep=101;
         this.vertStep=83;
         //image to render
@@ -70,7 +73,7 @@ class Player extends Character{
     update(){
         //////////check for x and y collision//////////////
          for(let enemy of allEnemies) {
-            if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
+            if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) { // if enemies collied
                 for(let enemy of allEnemies){//stops enemy movement
                     enemy.speed=0;
                 }
@@ -78,7 +81,7 @@ class Player extends Character{
                     window.location.reload();
                 }, 1000);
                
-            }else if(this.y===-10){//if player reaches water
+            }else if(this.y===-10){//if player reaches water game resets
                 this.reset();
             }
         } 
@@ -143,11 +146,8 @@ window.addEventListener("keydown", function(e) {
 ///////////////////////////////////////////////////////////////////////////
 /***********************instantiate your objects**************************/
 ///////////////////////////////////////////////////////////////////////////
-/* function createEnemy(num){
 
-} */
 //enemies
-
 const e1= new Enemy('r1','enemyX'),
 e2=new Enemy('r2','enemyX'),
 e3=new Enemy('r3','enemyX'),
@@ -156,10 +156,7 @@ e5=new Enemy('r5','enemyX'),
 e6=new Enemy('r6','enemyX'),
 e7=new Enemy('r7','enemyX');
 
- const allEnemies=[e1 ,e2,e3,e4,e5,e6,e7,e6];
-
-
-
+const allEnemies=[e1 ,e2,e3,e4,e5,e6,e7,e6];
 
 //player
 const player = new Player('playerY','playerX'); //parameters: ypos, xpos
