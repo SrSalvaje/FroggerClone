@@ -85,6 +85,7 @@ class Player extends Character{
                 this.reset();
             }
         } 
+
     }
     reset(){
         this.x=this.startPos["playerX"];
@@ -96,25 +97,25 @@ class Player extends Character{
             case "up":
                 if(this.y >= 0){
                     this.y-=this.vertStep;
-                    console.log(this.x, this.y);
+                    /* console.log(this.x, this.y); */
                 }
                 break;
             case "down":
                 if(this.y < this.bottomBorder){
                     this.y += this.vertStep;
-                    console.log(this.x, this.y);
+                   /*  console.log(this.x, this.y); */
                 }
                 break;
             case "right":
                 if(this.x < this.rightBorder){
                     this.x += this.sideStep;
-                    console.log(this.x, this.y);
+                    /* console.log(this.x, this.y); */
                 }
                 break;
             case "left":
                 if(this.x >= this.topAndLeftBorder){
                     this.x -= this.sideStep;
-                    console.log(this.x, this.y);
+                    /* console.log(this.x, this.y); */
                 }
                 break;
             }
@@ -138,16 +139,28 @@ class Gems extends Character{
         this.x= Gems.generateX(this.minX, this.maxX);
         this.gemType=["images/Gem Blue.png",
                     "images/Gem Green.png", 
-                    "images/Gem Orange.png",     
-                    "images/Heart.png", 
-                    "images/Star.png"];
+                    "images/Gem Orange.png"];
         this.sprite=this.gemType[Character.randomSpeed(0,this.gemType.length)];
     }
 
     update(){
+        //////////////////////////checks for gem collection/////////////////////////
+        for(let gem of allGems) {
+            if(player.y === gem.y && (gem.x + 70 > player.x && gem.x < player.x + 70) ) {      
+                 
+                allGems.splice(allGems.indexOf(gem),1) ;
+                }
+               
+             /*    setTimeout(() => {  /// after 1 sec game reloads 
+                    window.location.reload();
+                }, 1000);
+                */
+        } 
 
     }
+
     //programatically generates all the x and y coordinates
+    //fix: coordinates can repeat meaning more than 1 item renders in same place
    static generateX(minX, maxX){
         const xCoordinates=[];
        for(minX; minX<=maxX; minX+=101){
@@ -165,10 +178,21 @@ class Gems extends Character{
         }
         let randomIndex= Character.randomSpeed(0, yCoordinates.length);
         return yCoordinates[randomIndex];
-    }
-    
+    } 
 }
+//////////////////////////////////////////////////////////////////////////
+/****************************************lives****************************/
+///////////////////////////////////////////////////////////////////////////
+class Lives extends Gems{
+    constructor(minX, maxX, minY, maxY, yPos,xPos,speed,startPos){
+        super(minX, maxX, minY, maxY, yPos, xPos, speed, startPos);
+        this.y=Gems.generateY(this.minY, this.maxY);
+        this.x= Gems.generateX(this.minX, this.maxX);
+        this.gemType="images/Heart.png";
+        this.sprite=this.gemType;
 
+    }
+}
 
 
 
@@ -216,13 +240,15 @@ const allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7];
 //player
 const player = new Player('playerY','playerX'); //parameters: ypos, xpos
 
+//gems
 
-const g2 = new Gems(-2, 604, 73, 571);
+const g1=new Gems(-2, 604, 73, 571),
+g2 = new Gems(-2, 604, 73, 571),
+g3=new Gems(-2, 604, 73, 571),
+allGems=[g1,g2,g3];
 
-
-//////////////////////////////////////////////////////////////////////////
-/****************************************lives****************************/
-///////////////////////////////////////////////////////////////////////////
+//lives
+const l1= new Lives(-2, 604, 73, 571);
 
 /////////////////////////////////////////////////////////////////////////////
 /*******************************score**************************************/

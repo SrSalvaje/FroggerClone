@@ -81,6 +81,8 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         // checkCollisions();
+        player.update();
+        
     }
 
     /* This is called by the update function and loops through all of the
@@ -94,7 +96,12 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+
+        allGems.forEach(function(gem) {
+            gem.update();
+        });
+            
+       
     }
     
     /* This function initially draws the "game level", it will then call
@@ -143,8 +150,13 @@ var Engine = (function(global) {
         }
 
         renderEntities();
+
         player.render();
-        g2.render();
+        
+        allGems.forEach(function(gem){
+            gem.render();
+        });
+        l1.render();
         
     }
     
