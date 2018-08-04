@@ -192,6 +192,13 @@ class Lives extends Gems{
         this.sprite=this.gemType;
 
     }
+    update(){
+        if(player.y === l1.y && (l1.x + 70 > player.x && l1.x < player.x + 70) ) {      
+                 
+            lives.splice(0,1) ;
+            }
+
+    }
 }
 
 
@@ -248,7 +255,8 @@ g3=new Gems(-2, 604, 73, 571),
 allGems=[g1,g2,g3];
 
 //lives
-const l1= new Lives(-2, 604, 73, 571);
+const l1= new Lives(-2, 604, 73, 571),
+lives=[l1];
 
 /////////////////////////////////////////////////////////////////////////////
 /*******************************score**************************************/

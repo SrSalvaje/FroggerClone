@@ -100,7 +100,9 @@ var Engine = (function(global) {
         allGems.forEach(function(gem) {
             gem.update();
         });
-            
+        lives.forEach(function(live) {
+            live.update();
+        })
        
     }
     
@@ -156,7 +158,10 @@ var Engine = (function(global) {
         allGems.forEach(function(gem){
             gem.render();
         });
-        l1.render();
+        
+        lives.forEach(function(live){
+            live.render();
+        });
         
     }
     
