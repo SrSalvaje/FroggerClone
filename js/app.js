@@ -147,14 +147,16 @@ class Gems extends Character{
         //////////////////////////checks for gem collection/////////////////////////
         for(let gem of allGems) {
             if(player.y === gem.y && (gem.x + 70 > player.x && gem.x < player.x + 70) ) {      
-                 
                 allGems.splice(allGems.indexOf(gem),1) ;
                 }
-               
-             /*    setTimeout(() => {  /// after 1 sec game reloads 
-                    window.location.reload();
-                }, 1000);
-                */
+            }
+        if(allGems.length === 0){
+            setTimeout(() => {
+                g1=new Gems(-2, 604, 73, 571);
+                g2 = new Gems(-2, 604, 73, 571);
+                g3=new Gems(-2, 604, 73, 571);
+                allGems.push(g1,g2,g3);
+            }, 1000);       
         } 
 
     }
@@ -193,10 +195,17 @@ class Lives extends Gems{
 
     }
     update(){
+        //if player and life coordinates match remove life from lives array
         if(player.y === l1.y && (l1.x + 70 > player.x && l1.x < player.x + 70) ) {      
-                 
-            lives.splice(0,1) ;
+            lives.splice(0,1); 
             }
+        //if lives array is empty, wait a certain period of time, assign l1 a new value and push to lives array
+        if(lives.length===0){
+            setTimeout(() => {
+                l1=new Lives(-2, 604, 73, 571);
+                lives.push(l1);
+            }, 5000);
+        }
 
     }
 }
@@ -249,13 +258,13 @@ const player = new Player('playerY','playerX'); //parameters: ypos, xpos
 
 //gems
 
-const g1=new Gems(-2, 604, 73, 571),
+let g1=new Gems(-2, 604, 73, 571),
 g2 = new Gems(-2, 604, 73, 571),
-g3=new Gems(-2, 604, 73, 571),
-allGems=[g1,g2,g3];
+g3=new Gems(-2, 604, 73, 571);
+let allGems=[g1,g2,g3];
 
 //lives
-const l1= new Lives(-2, 604, 73, 571),
+let l1= new Lives(-2, 604, 73, 571),
 lives=[l1];
 
 /////////////////////////////////////////////////////////////////////////////
