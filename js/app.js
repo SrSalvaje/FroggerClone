@@ -43,7 +43,7 @@ class Character{
         array.forEach(element => {
                 if(this.y === element.y && (element.x+70 > this.x && element.x < this.x+70)) {
                    
-                    codeToRun()
+                    codeToRun(element)
                 }
         });
     }
@@ -82,16 +82,11 @@ class Player extends Character{
     }
     update(){
         //////////check for x and y collision//////////////
-           this.CheckCollision(allEnemies, this.deadOrAlive)
-               
-             
-         
-
-
-
+        this.CheckCollision(allEnemies, this.deadOrAlive);
         if(this.y===-10){//if player reaches water game resets
             this.reset();//change this for victory message
         }
+        this.CheckCollision(allGems, this.keepScore);
 
     }
     reset(){
@@ -114,6 +109,21 @@ class Player extends Character{
             }, 1000);
         } 
     }
+
+    keepScore(element){
+        scoreCount+= element.gemValue[element.sprite]; 
+        score.innerHTML=`${scoreCount}`;      
+        allGems.splice(allGems.indexOf(element),1);
+        if(allGems.length === 0){
+            setTimeout(() => {
+                g1=new Gems(-2, 604, 73, 571);
+                g2 = new Gems(-2, 604, 73, 571);
+                g3=new Gems(-2, 604, 73, 571);
+                allGems.push(g1,g2,g3);
+            }, 1000);       
+        } 
+    }
+
     handleInput (keyPressed){
         switch(keyPressed){
             case "up":
@@ -172,22 +182,6 @@ class Gems extends Character{
 
     update(){
         //////////////////////////checks for gem collection/////////////////////////
-        for(let gem of allGems) {
-            if(player.y === gem.y && (gem.x + 70 > player.x && gem.x < player.x + 70) ) {
-                scoreCount+= gem.gemValue[gem.sprite]; 
-                score.innerHTML=`${scoreCount}`;      
-                allGems.splice(allGems.indexOf(gem),1);
-                }
-            }
-        if(allGems.length === 0){
-            setTimeout(() => {
-                g1=new Gems(-2, 604, 73, 571);
-                g2 = new Gems(-2, 604, 73, 571);
-                g3=new Gems(-2, 604, 73, 571);
-                allGems.push(g1,g2,g3);
-            }, 1000);       
-        } 
-
     }
 
     //programatically generates all the x and y coordinates
