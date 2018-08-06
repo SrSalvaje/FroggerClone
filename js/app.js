@@ -140,14 +140,21 @@ class Gems extends Character{
         this.gemType=["images/Gem Blue.png",
                     "images/Gem Green.png", 
                     "images/Gem Orange.png"];
+
+        this.gemValue={"images/Gem Blue.png":50, 
+                        "images/Gem Green.png":75,
+                        "images/Gem Orange.png":100 
+                         };
         this.sprite=this.gemType[Character.randomSpeed(0,this.gemType.length)];
     }
 
     update(){
         //////////////////////////checks for gem collection/////////////////////////
         for(let gem of allGems) {
-            if(player.y === gem.y && (gem.x + 70 > player.x && gem.x < player.x + 70) ) {      
-                allGems.splice(allGems.indexOf(gem),1) ;
+            if(player.y === gem.y && (gem.x + 70 > player.x && gem.x < player.x + 70) ) {
+                scoreCount+= gem.gemValue[gem.sprite]; 
+                score.innerHTML=`${scoreCount}`;      
+                allGems.splice(allGems.indexOf(gem),1);
                 }
             }
         if(allGems.length === 0){
@@ -204,7 +211,7 @@ class Lives extends Gems{
             setTimeout(() => {
                 l1=new Lives(-2, 604, 73, 571);
                 lives.push(l1);
-            }, 5000);
+            }, 15000);
         }
 
     }
@@ -262,7 +269,10 @@ let g1=new Gems(-2, 604, 73, 571),
 g2 = new Gems(-2, 604, 73, 571),
 g3=new Gems(-2, 604, 73, 571);
 let allGems=[g1,g2,g3];
+const score = document.querySelector(".scoreC");
+let scoreCount=0;
 
+        
 //lives
 let l1= new Lives(-2, 604, 73, 571),
 lives=[l1];
