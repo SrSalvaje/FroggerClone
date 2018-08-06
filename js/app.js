@@ -37,6 +37,16 @@ class Character{
     render(){
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+
+    CheckCollision(array, codeToRun){
+       
+        array.forEach(element => {
+                if(this.y === element.y && (element.x+70 > this.x && element.x < this.x+70)) {
+                   
+                    codeToRun()
+                }
+        });
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -72,22 +82,13 @@ class Player extends Character{
     }
     update(){
         //////////check for x and y collision//////////////
-         for(let enemy of allEnemies) {
-            if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
-                if(lifeCount>1){
-                    lifeCount-=1;
-                    playerLife.innerHTML=lifeCount;
-                    this.reset();
-                }else if(lifeCount===1){
-                    for(let enemy of allEnemies){//stops enemy movement
-                        enemy.speed=0;
-                    }
-                    setTimeout(() => {  /// after 1 sec game reloads 
-                        window.location.reload(); //add gameover modal
-                    }, 1000);
-                } 
-            } 
-        } 
+           this.CheckCollision(allEnemies, this.deadOrAlive)
+               
+             
+         
+
+
+
         if(this.y===-10){//if player reaches water game resets
             this.reset();//change this for victory message
         }
@@ -97,6 +98,21 @@ class Player extends Character{
         this.x=this.startPos["playerX"];
         this.y=this.startPos["playerY"];
 
+    }
+
+    deadOrAlive(){
+        if(lifeCount>1){
+            lifeCount-=1;
+            playerLife.innerHTML=lifeCount;
+            this.reset();
+        }else if(lifeCount===1){
+            for(let enemy of allEnemies){//stops enemy movement
+                enemy.speed=0;
+            }
+            setTimeout(() => {  /// after 1 sec game reloads 
+                window.location.reload(); //add gameover modal
+            }, 1000);
+        } 
     }
     handleInput (keyPressed){
         switch(keyPressed){
