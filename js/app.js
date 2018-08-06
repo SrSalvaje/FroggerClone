@@ -204,6 +204,9 @@ class Lives extends Gems{
     update(){
         //if player and life coordinates match remove life from lives array
         if(player.y === l1.y && (l1.x + 70 > player.x && l1.x < player.x + 70) ) {      
+            
+            lifeCount+=1;
+            playerLife.innerHTML=lifeCount;
             lives.splice(0,1); 
             }
         //if lives array is empty, wait a certain period of time, assign l1 a new value and push to lives array
@@ -217,7 +220,10 @@ class Lives extends Gems{
     }
 }
 
-
+/* 
+const playerLife = document.querySelector(".lifeC");
+let lifeCount=1;
+ */
 
 /////////////////////////////////////////////////////////////////////////////
 /******************************event listeners*******************************/
@@ -276,6 +282,9 @@ let scoreCount=0;
 //lives
 let l1= new Lives(-2, 604, 73, 571),
 lives=[l1];
+const playerLife = document.querySelector(".lifeC");
+let lifeCount=1;
+
 
 /////////////////////////////////////////////////////////////////////////////
 /*******************************score**************************************/
