@@ -87,6 +87,9 @@ class Player extends Character{
             this.reset();//change this for victory message
         }
         this.CheckCollision(allGems, this.keepScore);
+        this.CheckCollision(lives, this.pickLife);
+
+
 
     }
     reset(){
@@ -99,7 +102,8 @@ class Player extends Character{
         if(lifeCount>1){
             lifeCount-=1;
             playerLife.innerHTML=lifeCount;
-            this.reset();
+           
+            player.reset();
         }else if(lifeCount===1){
             for(let enemy of allEnemies){//stops enemy movement
                 enemy.speed=0;
@@ -123,6 +127,20 @@ class Player extends Character{
             }, 1000);       
         } 
     }
+
+    pickLife(){
+        lifeCount+=1;
+        playerLife.innerHTML=lifeCount;
+        lives.splice(0,1);
+        if(lives.length===0){
+            setTimeout(() => {
+                l1=new Lives(-2, 604, 73, 571);
+                lives.push(l1);
+            }, 30000);
+        }
+    }
+    //if lives array is empty, wait a certain period of time, assign l1 a new value and push to lives array
+    
 
     handleInput (keyPressed){
         switch(keyPressed){
@@ -180,9 +198,7 @@ class Gems extends Character{
         this.sprite=this.gemType[Character.randomize(0,this.gemType.length)];
     }
 
-    update(){
-        //////////////////////////checks for gem collection/////////////////////////
-    }
+  
 
     //programatically generates all the x and y coordinates
     //fix: coordinates can repeat meaning more than 1 item renders in same place
@@ -218,20 +234,7 @@ class Lives extends Gems{
 
     }
     update(){
-        //if player and life coordinates match remove life from lives array
-        if(player.y === l1.y && (l1.x + 70 > player.x && l1.x < player.x + 70) ) {      
-            lifeCount+=1;
-            playerLife.innerHTML=lifeCount;
-            lives.splice(0,1); 
-            }
-        //if lives array is empty, wait a certain period of time, assign l1 a new value and push to lives array
-        if(lives.length===0){
-            setTimeout(() => {
-                l1=new Lives(-2, 604, 73, 571);
-                lives.push(l1);
-            }, 15000);
-        }
-
+       
     }
 }
 /////////////////////////////////////////////////////////////////////////////

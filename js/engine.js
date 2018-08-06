@@ -97,9 +97,9 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
 
-        allGems.forEach(function(gem) {
+       /*  allGems.forEach(function(gem) {
             gem.update();
-        });
+        }); */
         lives.forEach(function(live) {
             live.update();
         })
