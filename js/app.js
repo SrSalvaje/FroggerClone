@@ -17,7 +17,7 @@ class Character{
         this.x=startPos[xPos];
         this.y=startPos[yPos];
         //generates a random speed value
-        this.speed=Character.randomSpeed(speed["min"], speed["max"]);
+        this.speed=Character.randomize(speed["min"], speed["max"]);
         //porperties used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
@@ -28,7 +28,7 @@ class Character{
     }
     //function based on 'getRandomInt' of MDN web docs @
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-    static randomSpeed(min, max) {
+    static randomize(min, max) {
         min = Math.ceil(min);
         max = Math.floor(max);
         return  Math.floor(Math.random() * (max - min)) + min; 
@@ -83,7 +83,7 @@ class Player extends Character{
                         enemy.speed=0;
                     }
                     setTimeout(() => {  /// after 1 sec game reloads 
-                        window.location.reload();
+                        window.location.reload(); //add gameover modal
                     }, 1000);
                 } 
             } 
@@ -151,7 +151,7 @@ class Gems extends Character{
                         "images/Gem Green.png":75,
                         "images/Gem Orange.png":100 
                          };
-        this.sprite=this.gemType[Character.randomSpeed(0,this.gemType.length)];
+        this.sprite=this.gemType[Character.randomize(0,this.gemType.length)];
     }
 
     update(){
@@ -182,7 +182,7 @@ class Gems extends Character{
             xCoordinates.push(minX);
         }
        
-       let randomIndex=Character.randomSpeed(0, xCoordinates.length);
+       let randomIndex=Character.randomize(0, xCoordinates.length);
        return xCoordinates[randomIndex];
 
     }
@@ -191,7 +191,7 @@ class Gems extends Character{
         for(minY;minY<=maxY;minY+=83){ 
         yCoordinates.push(minY);
         }
-        let randomIndex= Character.randomSpeed(0, yCoordinates.length);
+        let randomIndex= Character.randomize(0, yCoordinates.length);
         return yCoordinates[randomIndex];
     } 
 }
