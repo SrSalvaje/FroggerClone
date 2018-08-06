@@ -73,18 +73,24 @@ class Player extends Character{
     update(){
         //////////check for x and y collision//////////////
          for(let enemy of allEnemies) {
-            if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) { // if enemies collied
-                for(let enemy of allEnemies){//stops enemy movement
-                    enemy.speed=0;
-                }
-                setTimeout(() => {  /// after 1 sec game reloads 
-                    window.location.reload();
-                }, 1000);
-               
-            }else if(this.y===-10){//if player reaches water game resets
-                this.reset();
-            }
+            if(this.y === enemy.y && (enemy.x + 70 > this.x && enemy.x < this.x + 70) ) {
+                if(lifeCount>1){
+                    lifeCount-=1;
+                    playerLife.innerHTML=lifeCount;
+                    this.reset();
+                }else if(lifeCount===1){
+                    for(let enemy of allEnemies){//stops enemy movement
+                        enemy.speed=0;
+                    }
+                    setTimeout(() => {  /// after 1 sec game reloads 
+                        window.location.reload();
+                    }, 1000);
+                } 
+            } 
         } 
+        if(this.y===-10){//if player reaches water game resets
+            this.reset();//change this for victory message
+        }
 
     }
     reset(){
@@ -204,7 +210,6 @@ class Lives extends Gems{
     update(){
         //if player and life coordinates match remove life from lives array
         if(player.y === l1.y && (l1.x + 70 > player.x && l1.x < player.x + 70) ) {      
-            
             lifeCount+=1;
             playerLife.innerHTML=lifeCount;
             lives.splice(0,1); 
@@ -219,12 +224,6 @@ class Lives extends Gems{
 
     }
 }
-
-/* 
-const playerLife = document.querySelector(".lifeC");
-let lifeCount=1;
- */
-
 /////////////////////////////////////////////////////////////////////////////
 /******************************event listeners*******************************/
 /////////////////////////////////////////////////////////////////////////////
