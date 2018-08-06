@@ -1,4 +1,12 @@
 "use strict";
+/////////////////////////////////////////////////////////////////////////
+/******************************** Gobal Variables********************* */
+//////////////////////////////////////////////////////////////////////////
+const score = document.querySelector(".scoreC"),
+playerLife = document.querySelector(".lifeC");
+
+let lifeCount=1,
+scoreCount=0;
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
 //////////////////////////////////////////////////////////////////////////
@@ -16,13 +24,13 @@ class Character{
         //needed by Player and Enemy
         this.x=startPos[xPos];
         this.y=startPos[yPos];
-        //generates a random speed value
+        //generates a random speed value for enemies
         this.speed=Character.randomize(speed["min"], speed["max"]);
-        //porperties used to keep charachter on canvas
+        //values used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
         this.rightBorder=604;
-
+        // values needed to move vertically and horizontally
         this.sideStep=101;
         this.vertStep=83;
     }
@@ -39,10 +47,8 @@ class Character{
     }
 
     CheckCollision(array, codeToRun){
-       
         array.forEach(element => {
                 if(this.y === element.y && (element.x+70 > this.x && element.x < this.x+70)) {
-                   
                     codeToRun(element)
                 }
         });
@@ -88,21 +94,17 @@ class Player extends Character{
         }
         this.CheckCollision(allGems, this.keepScore);
         this.CheckCollision(lives, this.pickLife);
-
-
-
     }
+
     reset(){
         this.x=this.startPos["playerX"];
         this.y=this.startPos["playerY"];
-
     }
 
     deadOrAlive(){
         if(lifeCount>1){
             lifeCount-=1;
             playerLife.innerHTML=lifeCount;
-           
             player.reset();
         }else if(lifeCount===1){
             for(let enemy of allEnemies){//stops enemy movement
@@ -136,36 +138,32 @@ class Player extends Character{
             setTimeout(() => {
                 l1=new Lives(-2, 604, 73, 571);
                 lives.push(l1);
-            }, 30000);
+            }, 30000);  //if lives array is empty, wait a certain period of time, assign l1 a new value and push to lives array
+    
         }
     }
-    //if lives array is empty, wait a certain period of time, assign l1 a new value and push to lives array
-    
 
     handleInput (keyPressed){
         switch(keyPressed){
             case "up":
                 if(this.y >= 0){
                     this.y-=this.vertStep;
-                    /* console.log(this.x, this.y); */
                 }
                 break;
             case "down":
                 if(this.y < this.bottomBorder){
                     this.y += this.vertStep;
-                   /*  console.log(this.x, this.y); */
+
                 }
                 break;
             case "right":
                 if(this.x < this.rightBorder){
                     this.x += this.sideStep;
-                    /* console.log(this.x, this.y); */
                 }
                 break;
             case "left":
                 if(this.x >= this.topAndLeftBorder){
                     this.x -= this.sideStep;
-                    /* console.log(this.x, this.y); */
                 }
                 break;
             }
@@ -185,41 +183,27 @@ class Gems extends Character{
         this.maxX=maxX;
         this.minY=minY;
         this.maxY=maxY;
-        this.y=Gems.generateY(this.minY, this.maxY);
-        this.x= Gems.generateX(this.minX, this.maxX);
+        this.y=Gems.generateCoor(this.minY, this.maxY, this.vertStep);
+        this.x= Gems.generateCoor(this.minX, this.maxX, this.sideStep);
         this.gemType=["images/Gem Blue.png",
                     "images/Gem Green.png", 
                     "images/Gem Orange.png"];
-
         this.gemValue={"images/Gem Blue.png":50, 
                         "images/Gem Green.png":75,
                         "images/Gem Orange.png":100 
                          };
         this.sprite=this.gemType[Character.randomize(0,this.gemType.length)];
     }
-
-  
-
     //programatically generates all the x and y coordinates
     //fix: coordinates can repeat meaning more than 1 item renders in same place
-   static generateX(minX, maxX){
-        const xCoordinates=[];
-       for(minX; minX<=maxX; minX+=101){
-            xCoordinates.push(minX);
+   static generateCoor(min, max, step){
+        const coordinates=[];
+       for(min; min<=max; min+=step){
+            coordinates.push(min);
         }
-       
-       let randomIndex=Character.randomize(0, xCoordinates.length);
-       return xCoordinates[randomIndex];
-
+       let randomIndex=Character.randomize(0, coordinates.length);
+       return coordinates[randomIndex];
     }
-    static generateY(minY, maxY){ 
-        const yCoordinates=[];
-        for(minY;minY<=maxY;minY+=83){ 
-        yCoordinates.push(minY);
-        }
-        let randomIndex= Character.randomize(0, yCoordinates.length);
-        return yCoordinates[randomIndex];
-    } 
 }
 //////////////////////////////////////////////////////////////////////////
 /****************************************lives****************************/
@@ -227,15 +211,11 @@ class Gems extends Character{
 class Lives extends Gems{
     constructor(minX, maxX, minY, maxY, yPos,xPos,speed,startPos){
         super(minX, maxX, minY, maxY, yPos, xPos, speed, startPos);
-        this.y=Gems.generateY(this.minY, this.maxY);
-        this.x= Gems.generateX(this.minX, this.maxX);
+        this.y=Gems.generateCoor(this.minY, this.maxY, this.vertStep);
+        this.x= Gems.generateCoor(this.minX, this.maxX, this.sideStep);
         this.gemType="images/Heart.png";
         this.sprite=this.gemType;
-
-    }
-    update(){
-       
-    }
+    }   
 }
 /////////////////////////////////////////////////////////////////////////////
 /******************************event listeners*******************************/
@@ -252,6 +232,7 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
 ///keeps screen from scrolling///////////
 window.addEventListener("keydown", function(e) {
     var allowedKeys = {
@@ -264,9 +245,8 @@ window.addEventListener("keydown", function(e) {
     });
 
 ///////////////////////////////////////////////////////////////////////////
-/***********************instantiate your objects**************************/
+/***********************instantiate objects**************************/
 ///////////////////////////////////////////////////////////////////////////
-
 //enemies
 const e1= new Enemy('r1','enemyX'),
 e2=new Enemy('r2','enemyX'),
@@ -274,46 +254,17 @@ e3=new Enemy('r3','enemyX'),
 e4=new Enemy('r4','enemyX'),
 e5=new Enemy('r5','enemyX'),
 e6=new Enemy('r6','enemyX'),
-e7=new Enemy('r7','enemyX');
-
-const allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7];
-
+e7=new Enemy('r7','enemyX'),
+allEnemies=[ e1 ,e2,e3,e4,e5,e6,e7],
 //player
-const player = new Player('playerY','playerX'); //parameters: ypos, xpos
-
+player = new Player('playerY','playerX'); //parameters: ypos, xpos
 //gems
-
 let g1=new Gems(-2, 604, 73, 571),
 g2 = new Gems(-2, 604, 73, 571),
-g3=new Gems(-2, 604, 73, 571);
-let allGems=[g1,g2,g3];
-const score = document.querySelector(".scoreC");
-let scoreCount=0;
-
-        
-//lives
-let l1= new Lives(-2, 604, 73, 571),
-lives=[l1];
-const playerLife = document.querySelector(".lifeC");
-let lifeCount=1;
-
-
-/////////////////////////////////////////////////////////////////////////////
-/*******************************score**************************************/
-////////////////////////////////////////////////////////////////////////////
-
-
- 
- 
+g3=new Gems(-2, 604, 73, 571),
+allGems=[g1,g2,g3],
    
-/* static shuffle(array) {
-    let currentIndex = array.length, temporaryValue, randomIndex;
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-    return array;
-} */
+//lives
+l1= new Lives(-2, 604, 73, 571),
+lives=[l1];
+   
