@@ -7,12 +7,18 @@ playerLife = document.querySelector(".lifeC");
 
 let lifeCount=1,
 scoreCount=0;
+
+let timeC=0;
+setInterval(() => { 
+    timeC++;
+   
+}, 1000);
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, xPos,  speed={min:100, max:350}, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571, enemyX:-101,
+    constructor(yPos, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571, enemyX:-101,
     /* gems*/ }){
         //xPos and yPos are the only paraemters needed by Enemy and Player classes, 
         //rest of the parameters are assigned by Character constructor
@@ -24,8 +30,7 @@ class Character{
         //needed by Player and Enemy
         this.x=startPos[xPos];
         this.y=startPos[yPos];
-        //generates a random speed value for enemies
-        this.speed=Character.randomize(speed["min"], speed["max"]);
+        
         //values used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
@@ -34,6 +39,7 @@ class Character{
         this.sideStep=101;
         this.vertStep=83;
     }
+
     //function based on 'getRandomInt' of MDN web docs @
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     static randomize(min, max) {
@@ -59,19 +65,23 @@ class Character{
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
 class Enemy extends Character{
-    constructor(yPos,xPos, speed, startPos) {
-        super(yPos,xPos,speed, startPos);
+    constructor(yPos,xPos, startPos) {
+        super(yPos,xPos, startPos);
          //image to render
          this.sprite="images/enemy-bug.png";
+         //generates a random speed value for enemies
+         this.minSpeed=100;
+         this.maxSpeed=250;
+         this.speed=Character.randomize(this.minSpeed, this.maxSpeed);
     }
     update(dt){
         //this conditional moves and loops the enemy
         if(this.x< this.rightBorder+100){//checks that charachter is inside canvas
             this.x+=this.speed*dt;//if so, it changes its value based on speed and dt
             }else{//if charcter is outside canvas, it resets its x position to render just outside left border
-                this.x=-83;
-            }
-        }
+                this.x=-this.vertStep;
+            };
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -117,18 +127,54 @@ class Player extends Character{
     }
 
     keepScore(element){
+        
+        
         scoreCount+= element.gemValue[element.sprite]; 
         score.innerHTML=`${scoreCount}`;      
         allGems.splice(allGems.indexOf(element),1);
-        if(allGems.length === 0){
-            setTimeout(() => {
+       
+switch (allGems.length) {
+    case 0:
+    allEnemies.forEach(element => {
+        element.minSpeed+=10;
+        element.speed=Character.randomize(element.minSpeed, element.maxSpeed);
+        console.log(element.speed);
+    });
+    setTimeout(() => { //then wait 1 sec before respawning new gems
+        g1=new Gems(-2, 604, 73, 571);
+        g2 = new Gems(-2, 604, 73, 571);
+        g3=new Gems(-2, 604, 73, 571);
+        allGems.push(g1,g2,g3);
+    }, 1000); 
+        break;
+
+    default:
+    if(timeC%5===0){
+        allGems.length=0;
+         g1=new Gems(-2, 604, 73, 571);
+        g2 = new Gems(-2, 604, 73, 571);
+        g3=new Gems(-2, 604, 73, 571);
+        allGems.push(g1,g2,g3);
+    }
+        break;
+}
+    }
+/////////////////////////////
+        /* if(allGems.length === 0){ //if all gems are collected increase min speed and randomize enemies speed
+            allEnemies.forEach(element => {
+                element.minSpeed+=10;
+                element.speed=Character.randomize(element.minSpeed, element.maxSpeed);
+                console.log(element.speed);
+            });
+            setTimeout(() => { //then wait 1 sec before respawning new gems
                 g1=new Gems(-2, 604, 73, 571);
                 g2 = new Gems(-2, 604, 73, 571);
                 g3=new Gems(-2, 604, 73, 571);
                 allGems.push(g1,g2,g3);
             }, 1000);       
-        } 
-    }
+        };
+       
+    } */
 
     pickLife(){
         lifeCount+=1;
@@ -267,4 +313,14 @@ allGems=[g1,g2,g3],
 //lives
 l1= new Lives(-2, 604, 73, 571),
 lives=[l1];
-   
+
+/* (setInterval(()=>{
+    if(allGems.length!==0){
+    allGems.length=0;
+    g1=new Gems(-2, 604, 73, 571);
+    g2 = new Gems(-2, 604, 73, 571);
+    g3=new Gems(-2, 604, 73, 571);
+    allGems.push(g1,g2,g3);
+    }
+},6000));
+    */
