@@ -12,7 +12,7 @@ scoreCount=0;
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, xPos,  speed={min:100, max:350}, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571, enemyX:-101,
+    constructor(yPos, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571, enemyX:-101,
     /* gems*/ }){
         //xPos and yPos are the only paraemters needed by Enemy and Player classes, 
         //rest of the parameters are assigned by Character constructor
@@ -24,8 +24,7 @@ class Character{
         //needed by Player and Enemy
         this.x=startPos[xPos];
         this.y=startPos[yPos];
-        //generates a random speed value for enemies
-        this.speed=Character.randomize(speed["min"], speed["max"]);
+        
         //values used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
@@ -34,6 +33,7 @@ class Character{
         this.sideStep=101;
         this.vertStep=83;
     }
+
     //function based on 'getRandomInt' of MDN web docs @
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     static randomize(min, max) {
@@ -59,10 +59,14 @@ class Character{
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
 class Enemy extends Character{
-    constructor(yPos,xPos, speed, startPos) {
-        super(yPos,xPos,speed, startPos);
+    constructor(yPos,xPos, startPos) {
+        super(yPos,xPos, startPos);
          //image to render
          this.sprite="images/enemy-bug.png";
+         //generates a random speed value for enemies
+         this.minSpeed=100;
+         this.maxSpeed=250;
+         this.speed=Character.randomize(this.minSpeed, this.maxSpeed);
     }
     update(dt){
         //this conditional moves and loops the enemy
@@ -70,8 +74,9 @@ class Enemy extends Character{
             this.x+=this.speed*dt;//if so, it changes its value based on speed and dt
             }else{//if charcter is outside canvas, it resets its x position to render just outside left border
                 this.x=-83;
-            }
-        }
+            };
+           
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -121,6 +126,14 @@ class Player extends Character{
         score.innerHTML=`${scoreCount}`;      
         allGems.splice(allGems.indexOf(element),1);
         if(allGems.length === 0){
+            allEnemies.forEach(element => {
+                    element.speed=Character.randomize(Enemy.minSpeed, Enemy.maxSpeed);
+                    allEnemies.forEach(element => {
+                        console.log(`speed current: ${element.speed}`);
+                    });
+ 
+            });
+
             setTimeout(() => {
                 g1=new Gems(-2, 604, 73, 571);
                 g2 = new Gems(-2, 604, 73, 571);
