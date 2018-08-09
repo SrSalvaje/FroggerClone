@@ -17,7 +17,15 @@ setInterval(() => {
         g2 = new Gems(-2, 604, 73, 571);
         g3=new Gems(-2, 604, 73, 571);
         allGems.push(g1,g2,g3);
+    };
+    if(timeC%10===0 && lives.length>0){
+        lives.length=0;
+    };
+    if(timeC%30===0 && lives.length===0){
+            l1=new Lives(-2, 604, 73, 571);
+            lives.push(l1);
     }
+    
 }, 1000);
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
@@ -173,13 +181,6 @@ class Player extends Character{
         lifeCount+=1;
         playerLife.innerHTML=lifeCount;
         lives.splice(0,1);
-        if(lives.length===0){
-            setTimeout(() => {
-                l1=new Lives(-2, 604, 73, 571);
-                lives.push(l1);
-            }, 30000);  //if lives array is empty, wait a certain period of time, assign l1 a new value and push to lives array
-    
-        }
     }
 
     handleInput (keyPressed){
