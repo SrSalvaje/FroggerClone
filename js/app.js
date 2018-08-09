@@ -4,9 +4,21 @@
 //////////////////////////////////////////////////////////////////////////
 const score = document.querySelector(".scoreC"),
 playerLife = document.querySelector(".lifeC");
-
 let lifeCount=1,
-scoreCount=0;
+scoreCount=0,
+timeC=0;
+/////////////////////////////internal clock for gem auto respawn/////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+setInterval(() => { 
+    timeC++;
+    if(timeC%5===0){
+        allGems.length=0;
+         g1=new Gems(-2, 604, 73, 571);
+        g2 = new Gems(-2, 604, 73, 571);
+        g3=new Gems(-2, 604, 73, 571);
+        allGems.push(g1,g2,g3);
+    }
+}, 1000);
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
 //////////////////////////////////////////////////////////////////////////
@@ -49,7 +61,7 @@ class Character{
     CheckCollision(array, codeToRun){
         array.forEach(element => {
                 if(this.y === element.y && (element.x+70 > this.x && element.x < this.x+70)) {
-                    codeToRun(element)
+                    codeToRun(element);
                 }
         });
     }
@@ -73,10 +85,20 @@ class Enemy extends Character{
         if(this.x< this.rightBorder+100){//checks that charachter is inside canvas
             this.x+=this.speed*dt;//if so, it changes its value based on speed and dt
             }else{//if charcter is outside canvas, it resets its x position to render just outside left border
+<<<<<<< HEAD
                 this.x=-83;
             };
            
     }
+||||||| merged common ancestors
+                this.x=-83;
+            }
+        }
+=======
+                this.x=-this.vertStep;
+            };       
+    }
+>>>>>>> no-switch
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -99,6 +121,7 @@ class Player extends Character{
         }
         this.CheckCollision(allGems, this.keepScore);
         this.CheckCollision(lives, this.pickLife);
+        
     }
 
     reset(){
@@ -122,27 +145,41 @@ class Player extends Character{
     }
 
     keepScore(element){
-        scoreCount+= element.gemValue[element.sprite]; 
-        score.innerHTML=`${scoreCount}`;      
-        allGems.splice(allGems.indexOf(element),1);
-        if(allGems.length === 0){
+        scoreCount+= element.gemValue[element.sprite]; //increase score based on gem value
+        score.innerHTML=`${scoreCount}`;  //update DOM    
+        allGems.splice(allGems.indexOf(element),1); //remove the collected gem from the rendering array
+        //next lines are used to increase speed every time 500 points are acumulated, because score incrmements unevenly, based on gem value, the script rounds it down
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+        let divide=scoreCount/100; //first divide the score by a 100 in order to turn it into decimal points so 525 turns into 5.25
+        let round = Math.trunc(divide); //then round it down to the nearest integer, this gets rid of the decimal points so 5.25 turns into 5
+        let multiply = round*100; //then multiply it by 100 so 5 is now 500
+        if(round!==0 && multiply%500===0){ // check if its a multiple of 500 and if so,  run the the code
             allEnemies.forEach(element => {
-                    element.speed=Character.randomize(Enemy.minSpeed, Enemy.maxSpeed);
-                    allEnemies.forEach(element => {
-                        console.log(`speed current: ${element.speed}`);
-                    });
- 
+                if(element.minSpeed<300){ //if the min speed of Enemy is less than 300
+                    element.minSpeed+=10; // increase it by 10
+                };
+                if(element.maxSpeed<350){ //if the max speed is less than 350
+                    element.maxSpeed+=5; // increase it by 5
+                }
+                element.speed=Character.randomize(element.minSpeed, element.maxSpeed); // randomize and update the current speed of all enemies based on new min and max values
             });
-
-            setTimeout(() => {
+            console.log(`score is ${scoreCount}, min speed is now ${e1.minSpeed}, max speed is now ${e1.maxSpeed}, and e1 current speed is ${e1.speed}`);
+            
+        };   
+        if(allGems.length === 0){ //if all from a set of 3 are collected
+            scoreCount+=50;//give 50 point bonus
+            score.innerHTML=`${scoreCount}`;  //update DOM   
+            setTimeout(() => { //then wait 1 sec before respawning new gems
+                if(allEnemies.length===0){ //checks condition again to ensure that gem auto respawn hasnt filled the array again
                 g1=new Gems(-2, 604, 73, 571);
                 g2 = new Gems(-2, 604, 73, 571);
                 g3=new Gems(-2, 604, 73, 571);
                 allGems.push(g1,g2,g3);
-            }, 1000);       
-        } 
+                }
+            }, 1000);      
+        }
+        
     }
-
     pickLife(){
         lifeCount+=1;
         playerLife.innerHTML=lifeCount;
@@ -280,4 +317,14 @@ allGems=[g1,g2,g3],
 //lives
 l1= new Lives(-2, 604, 73, 571),
 lives=[l1];
+/* (setInterval(()=>{
+    if(allGems.length!==0){
+    allGems.length=0;
+    g1=new Gems(-2, 604, 73, 571);
+    g2 = new Gems(-2, 604, 73, 571);
+    g3=new Gems(-2, 604, 73, 571);
+    allGems.push(g1,g2,g3);
+    }
+},6000));
+    */
    
