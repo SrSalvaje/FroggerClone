@@ -80,7 +80,7 @@ class Enemy extends Character{
             this.x+=this.speed*dt;//if so, it changes its value based on speed and dt
             }else{//if charcter is outside canvas, it resets its x position to render just outside left border
                 this.x=-this.vertStep;
-            };
+            };       
     }
 }
 
@@ -127,40 +127,10 @@ class Player extends Character{
     }
 
     keepScore(element){
-        
-        
         scoreCount+= element.gemValue[element.sprite]; 
         score.innerHTML=`${scoreCount}`;      
         allGems.splice(allGems.indexOf(element),1);
-       
-switch (allGems.length) {
-    case 0:
-    allEnemies.forEach(element => {
-        element.minSpeed+=10;
-        element.speed=Character.randomize(element.minSpeed, element.maxSpeed);
-        console.log(element.speed);
-    });
-    setTimeout(() => { //then wait 1 sec before respawning new gems
-        g1=new Gems(-2, 604, 73, 571);
-        g2 = new Gems(-2, 604, 73, 571);
-        g3=new Gems(-2, 604, 73, 571);
-        allGems.push(g1,g2,g3);
-    }, 1000); 
-        break;
-
-    default:
-    if(timeC%5===0){
-        allGems.length=0;
-         g1=new Gems(-2, 604, 73, 571);
-        g2 = new Gems(-2, 604, 73, 571);
-        g3=new Gems(-2, 604, 73, 571);
-        allGems.push(g1,g2,g3);
-    }
-        break;
-}
-    }
-/////////////////////////////
-        /* if(allGems.length === 0){ //if all gems are collected increase min speed and randomize enemies speed
+        if(allGems.length === 0){
             allEnemies.forEach(element => {
                 element.minSpeed+=10;
                 element.speed=Character.randomize(element.minSpeed, element.maxSpeed);
@@ -172,8 +142,32 @@ switch (allGems.length) {
                 g3=new Gems(-2, 604, 73, 571);
                 allGems.push(g1,g2,g3);
             }, 1000);       
-        };
-       
+        }; 
+    }
+ /*    switch (allGems.length) {
+        case 0:
+        allEnemies.forEach(element => {
+            element.minSpeed+=10;
+            element.speed=Character.randomize(element.minSpeed, element.maxSpeed);
+            console.log(element.speed);
+        });
+        setTimeout(() => { //then wait 1 sec before respawning new gems
+            g1=new Gems(-2, 604, 73, 571);
+            g2 = new Gems(-2, 604, 73, 571);
+            g3=new Gems(-2, 604, 73, 571);
+            allGems.push(g1,g2,g3);
+        }, 1000); 
+            break;
+    
+        default:
+        if(timeC%5===0){
+            allGems.length=0;
+             g1=new Gems(-2, 604, 73, 571);
+            g2 = new Gems(-2, 604, 73, 571);
+            g3=new Gems(-2, 604, 73, 571);
+            allGems.push(g1,g2,g3);
+        }
+            break;
     } */
 
     pickLife(){
@@ -313,7 +307,6 @@ allGems=[g1,g2,g3],
 //lives
 l1= new Lives(-2, 604, 73, 571),
 lives=[l1];
-
 /* (setInterval(()=>{
     if(allGems.length!==0){
     allGems.length=0;
@@ -324,3 +317,4 @@ lives=[l1];
     }
 },6000));
     */
+   
