@@ -305,15 +305,4 @@ allGems=[g1,g2,g3],
    
 //lives
 l1= new Lives(-2, 604, 73, 571),
-lives=[l1];
-/* (setInterval(()=>{
-    if(allGems.length!==0){
-    allGems.length=0;
-    g1=new Gems(-2, 604, 73, 571);
-    g2 = new Gems(-2, 604, 73, 571);
-    g3=new Gems(-2, 604, 73, 571);
-    allGems.push(g1,g2,g3);
-    }
-},6000));
-    */
-   
+lives=[l1]; 
