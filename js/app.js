@@ -87,12 +87,15 @@ function mytimer(){
         secondsM.innerHTML=secs;
     } 
 }
+
+  
+
 //////////////////////////////////////////////Modal Window///////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
-function toggleModal(){
+/* function toggleModal(){
     modal.classList.toggle("show-modal");
 }
-
+ */
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
 //////////////////////////////////////////////////////////////////////////
@@ -198,14 +201,31 @@ class Player extends Character{
             playerLife.innerHTML=lifeCount;
             player.reset();
         }else if(lifeCount===1){
+           lifeCount-=1;
+           playerLife.innerHTML=lifeCount;
+           for(let enemy of allEnemies){//stops enemy movement
+            enemy.speed=0;  
+        }   
+        setTimeout(() => { 
+            modal.classList.toggle("show-modal");
+        }, 1000);    
+        }
+           
+            
+        
+    }
+
+    gameOver(){
+        if(lifeCount===0){
             for(let enemy of allEnemies){//stops enemy movement
                 enemy.speed=0;
-
+                modal.classList.toggle("show-modal");
             }
-            setTimeout(() => {  /// after 1 sec game reloads 
-                window.location.reload(); //add gameover modal
-            }, 1000);
-        } 
+            /* setTimeout(() => { 
+                modal.classList.toggle("show-modal");
+            }, 1000); */
+        }  
+
     }
 
     keepScore(element){
@@ -331,7 +351,7 @@ class Lives extends Gems{
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function _listener(e) {
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -340,6 +360,7 @@ document.addEventListener('keyup', function(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
 
 ///keeps screen from scrolling///////////
 window.addEventListener("keydown", function(e) {
@@ -351,7 +372,7 @@ window.addEventListener("keydown", function(e) {
 
 //restarts game from modal window
 playAgain.addEventListener("click", function(){
-    replay();
+    window.location.reload(); //add gameover modal
 });
 //closes the modal window when the close button is clicked
 closeButton.addEventListener("click", toggleModal);
