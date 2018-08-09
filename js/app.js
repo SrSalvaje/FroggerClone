@@ -4,14 +4,13 @@
 //////////////////////////////////////////////////////////////////////////
 const score = document.querySelector(".scoreC"),
 playerLife = document.querySelector(".lifeC");
-
 let lifeCount=1,
-scoreCount=0;
-
-let timeC=0;
+scoreCount=0,
+timeC=0;
+/////////////////////////////internal clock for gem auto respawn/////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 setInterval(() => { 
     timeC++;
-   
 }, 1000);
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
@@ -134,13 +133,15 @@ class Player extends Character{
             allEnemies.forEach(element => {
                 element.minSpeed+=10;
                 element.speed=Character.randomize(element.minSpeed, element.maxSpeed);
-                console.log(element.speed);
+                console.log(`${element.speed}`);
             });
+            console.log("stop");
             setTimeout(() => { //then wait 1 sec before respawning new gems
                 g1=new Gems(-2, 604, 73, 571);
                 g2 = new Gems(-2, 604, 73, 571);
                 g3=new Gems(-2, 604, 73, 571);
                 allGems.push(g1,g2,g3);
+                console.log("respawn after gems collected");
             }, 1000);       
         }; 
     }
@@ -158,7 +159,6 @@ class Player extends Character{
             allGems.push(g1,g2,g3);
         }, 1000); 
             break;
-    
         default:
         if(timeC%5===0){
             allGems.length=0;
