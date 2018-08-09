@@ -3,22 +3,57 @@
 /******************************** Gobal Variables********************* */
 //////////////////////////////////////////////////////////////////////////
 const score = document.querySelector(".scoreC"),
+scoreM=document.querySelector(".scoreM"),
 playerLife = document.querySelector(".lifeC"),
-minutes=document.querySelector(".minutes"),
-seconds=document.querySelector(".seconds");
-
+minutes=document.querySelector(".minutesM"),
+minutesM=document.querySelector(".minutes"),//for modal
+seconds=document.querySelector(".seconds"),
+secondsM=document.querySelector(".secondsM");
+const modal = document.querySelector(".modal");//used to apply the class the makes the modal window visble
+const closeButton = document.querySelector(".close-modal");
 let lifeCount=1,
 scoreCount=0,
 timeC=0,
 min=0,
 secs=0;
+const playAgain = document.querySelector(".play-again");
+/////////////////////////////////////modal window/////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+function toggleModal() { 
+    modal.classList.toggle("show-modal");
+
+}
+
+
+function defeat(){
+        stopGameTimer(); //stops timer (line 223)
+        toggleModal();//launches modal window (line 178)
+
+}
+
+
+/*
+*this section deals with the play again button
+*/
+// closes the modal window()(see event listener in line 260) and calls restart()(line 71)
+function replay(){
+    toggleModal();
+    restart();
+}
 
 /////////////////////////////internal clock for gem auto respawn/////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-setInterval(() => { 
+let myinterval= setInterval(() => { 
+    respawning();
+    mytimer();   
+}, 1000);
+
+function stopGameTimer(){
+    clearInterval(myinterval);
+}
+    ///////respawning of gems and hearts///
+function respawning(){
     timeC++; //internal timer
-    secs++; //DOM timer
-    //////////////////////respawning of gems and hearts//////////////////////
     if(timeC%5===0){
         allGems.length=0;
          g1=new Gems(-2, 604, 73, 571);
@@ -33,18 +68,31 @@ setInterval(() => {
             l1=new Lives(-2, 604, 73, 571);
             lives.push(l1);
     };
-    ///////////////////////////DOM timer////////////////////////////
+}
+/////DOM timer///////////
+function mytimer(){
+    secs++; //DOM timer
     if(secs<=9){
         seconds.innerHTML=`0${secs}`;//updates the time html with the current value of secTimer + a 0
+        secondsM.innerHTML=`0${secs}`;
     }else if(secs==59){ //resets seconds and adds 1 to minutes
         secs=0; // seconds counter is reseted
         seconds.innerHTML=`0${secs}`; //modifies rhe HTML
+        secondsM.innerHTML=`0${secs}`;
         min++;//increments the minute counter
         minutes.innerHTML=`0${min}`; //modifies the html
+        minutesM.innerHTML=`0${min}`;
     }else{
         seconds.innerHTML=secs; // if the secs are > than 9 no 0 to the left is needed
+        secondsM.innerHTML=secs;
     } 
-}, 1000);
+}
+//////////////////////////////////////////////Modal Window///////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+function toggleModal(){
+    modal.classList.toggle("show-modal");
+}
+
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
 //////////////////////////////////////////////////////////////////////////
@@ -132,7 +180,7 @@ class Player extends Character{
         //////////check for x and y collision//////////////
         this.CheckCollision(allEnemies, this.deadOrAlive);
         if(this.y===-10){//if player reaches water game resets
-            this.reset();//change this for victory message
+            this.reset();
         }
         this.CheckCollision(allGems, this.keepScore);
         this.CheckCollision(lives, this.pickLife);
@@ -152,6 +200,7 @@ class Player extends Character{
         }else if(lifeCount===1){
             for(let enemy of allEnemies){//stops enemy movement
                 enemy.speed=0;
+
             }
             setTimeout(() => {  /// after 1 sec game reloads 
                 window.location.reload(); //add gameover modal
@@ -161,7 +210,8 @@ class Player extends Character{
 
     keepScore(element){
         scoreCount+= element.gemValue[element.sprite]; //increase score based on gem value
-        score.innerHTML=`${scoreCount}`;  //update DOM    
+        score.innerHTML=`${scoreCount}`;  //update DOM 
+        scoreM.innerHTML=`${scoreCount}`;   
         allGems.splice(allGems.indexOf(element),1); //remove the collected gem from the rendering array
         //next lines are used to increase speed every time 500 points are acumulated, because score incrmements unevenly, based on gem value, the script rounds it down
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -293,14 +343,18 @@ document.addEventListener('keyup', function(e) {
 
 ///keeps screen from scrolling///////////
 window.addEventListener("keydown", function(e) {
-    var allowedKeys = {
-        37: 'left',
-        38: 'up',
-        39: 'right',
-        40: 'down'
-    };
-        e.preventDefault();
-    });
+    let pressedKey= e.keyCode;  
+    if(pressedKey=== 37 || 38 || 39 || 40){
+       e.preventDefault();
+    }   
+});
+
+//restarts game from modal window
+playAgain.addEventListener("click", function(){
+    replay();
+});
+//closes the modal window when the close button is clicked
+closeButton.addEventListener("click", toggleModal);
 
 ///////////////////////////////////////////////////////////////////////////
 /***********************instantiate objects**************************/
