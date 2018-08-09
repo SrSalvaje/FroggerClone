@@ -85,20 +85,9 @@ class Enemy extends Character{
         if(this.x< this.rightBorder+100){//checks that charachter is inside canvas
             this.x+=this.speed*dt;//if so, it changes its value based on speed and dt
             }else{//if charcter is outside canvas, it resets its x position to render just outside left border
-<<<<<<< HEAD
-                this.x=-83;
-            };
-           
-    }
-||||||| merged common ancestors
-                this.x=-83;
-            }
-        }
-=======
                 this.x=-this.vertStep;
             };       
     }
->>>>>>> no-switch
 }
 
 //////////////////////////////////////////////////////////////////////
