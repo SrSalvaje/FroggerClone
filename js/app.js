@@ -3,14 +3,22 @@
 /******************************** Gobal Variables********************* */
 //////////////////////////////////////////////////////////////////////////
 const score = document.querySelector(".scoreC"),
-playerLife = document.querySelector(".lifeC");
+playerLife = document.querySelector(".lifeC"),
+minutes=document.querySelector(".minutes"),
+seconds=document.querySelector(".seconds");
+
 let lifeCount=1,
 scoreCount=0,
-timeC=0;
+timeC=0,
+min=0,
+secs=0;
+
 /////////////////////////////internal clock for gem auto respawn/////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 setInterval(() => { 
-    timeC++;
+    timeC++; //internal timer
+    secs++; //DOM timer
+    //////////////////////respawning of gems and hearts//////////////////////
     if(timeC%5===0){
         allGems.length=0;
          g1=new Gems(-2, 604, 73, 571);
@@ -24,8 +32,18 @@ setInterval(() => {
     if(timeC%30===0 && lives.length===0){
             l1=new Lives(-2, 604, 73, 571);
             lives.push(l1);
-    }
-    
+    };
+    ///////////////////////////DOM timer////////////////////////////
+    if(secs<=9){
+        seconds.innerHTML=`0${secs}`;//updates the time html with the current value of secTimer + a 0
+    }else if(secs==59){ //resets seconds and adds 1 to minutes
+        secs=0; // seconds counter is reseted
+        seconds.innerHTML=`0${secs}`; //modifies rhe HTML
+        min++;//increments the minute counter
+        minutes.innerHTML=`0${min}`; //modifies the html
+    }else{
+        seconds.innerHTML=secs; // if the secs are > than 9 no 0 to the left is needed
+    } 
 }, 1000);
 //////////////////////////////////////////////////////////////////////////
 /*****************************a class to rule them all***********************/
