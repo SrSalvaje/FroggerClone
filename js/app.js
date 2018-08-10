@@ -21,29 +21,30 @@ scoreCount=0,
 timeC=0,
 min=0,
 secs=0;
-/////////////////////////////////////modal window/////////////////////////////
+/////////////////////////////////////modal windows/////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
-function toggleModal() { 
+function toggleModal() {  //engame
     modal.classList.toggle("show-modal");
 }
 
-function startM(){
+function startM(){ //start
     startModal.classList.toggle("show-modal");
 }
 
-function replay(){
-    toggleModal();
-
-}
 function start(){
     startM();
+    startTimer();
 }
 /////////////////////////////internal clock for gem auto respawn/////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-let myinterval= setInterval(() => { 
-    respawning();
-    mytimer();   
-}, 1000);
+let myinterval;
+
+function startTimer(){
+    myinterval = setInterval(() => { 
+        respawning();
+        mytimer();   
+    }, 1000);
+}
 
 function stopGameTimer(){
     clearInterval(myinterval);
@@ -337,10 +338,14 @@ window.addEventListener("keydown", function(e) {
        e.preventDefault();
     }   
 });
+//startsa game
+startGame.addEventListener("click", ()=>{
+    start()
+})
 
 //restarts game from modal window
 playAgain.addEventListener("click", function(){
-    window.location.reload(); //add gameover modal
+    window.location.reload(); 
 });
 //closes the modal window when the close button is clicked
 closeButton.addEventListener("click", toggleModal);
@@ -348,8 +353,9 @@ closeButton.addEventListener("click", toggleModal);
 ///////////////////////////////////////////////////////////////////////////
 /***********************instantiate objects**************************/
 ///////////////////////////////////////////////////////////////////////////
+
 //enemies
-const e1= new Enemy('r1','enemyX'),
+ const e1= new Enemy('r1','enemyX'),
 e2=new Enemy('r2','enemyX'),
 e3=new Enemy('r3','enemyX'),
 e4=new Enemy('r4','enemyX'),
@@ -366,4 +372,4 @@ g3=new Gems(-2, 604, 73, 571),
 allGems=[g1,g2,g3], 
 //lives
 l1= new Lives(-2, 604, 73, 571),
-lives=[l1]; 
+lives=[l1];
