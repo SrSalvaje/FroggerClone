@@ -10,8 +10,12 @@ minutesM=document.querySelector(".minutes"),//for modal
 seconds=document.querySelector(".seconds"),
 secondsM=document.querySelector(".secondsM"),
 modal = document.querySelector(".modal"),//used to apply the class the makes the modal window visble
+startModal= document.querySelector(".start-mo"),
 closeButton = document.querySelector(".close-modal"),
-playAgain = document.querySelector(".play-again");
+closeinst = document.querySelector(".close-inst"),
+playAgain = document.querySelector(".play-again"),
+startGame = document.querySelector(".play");
+
 let lifeCount=1,
 scoreCount=0,
 timeC=0,
@@ -23,9 +27,16 @@ function toggleModal() {
     modal.classList.toggle("show-modal");
 }
 
+function startM(){
+    startModal.classList.toggle("show-modal");
+}
+
 function replay(){
     toggleModal();
-    restart();
+
+}
+function start(){
+    startM();
 }
 /////////////////////////////internal clock for gem auto respawn/////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////

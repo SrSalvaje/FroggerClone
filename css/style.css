@@ -50,12 +50,11 @@ h1{
 
 /********************** end of score grid****************************** */
 .row3{
-    grid-area: 3/1/4/2;
-    float: top;
+    grid-area: 3/1/4/2;  
 }
 
 /* *****************************modal********************************** */
-.modal {
+.modal, .start-mo {
     position: fixed;
     left: 0;
     top: 0;
@@ -66,7 +65,7 @@ h1{
     transform: scale(1.1);
 }
 
-.mo-content {
+.mo-content, .instructions {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 1% 24% 55% 20%;
@@ -82,11 +81,11 @@ h1{
     font-size: 30px; 
 }
 /* h1 inside modal */
-.modal-title {
+.modal-title, .inst-title {
     font-size: 40px;
 }
 /* x to close window */
-.close-modal {
+.close-modal, .close-inst {
     float: right;
     width: 1.5rem;
     line-height: 1.5rem;
@@ -100,26 +99,26 @@ h1{
     background-color: darkgray;
 }
 /* position of heading in grid */
-.m-title-cont {
+.m-title-cont, .inst-title-cont {
     grid-row-start: 2;
     align-self: center;
     justify-self: center;
 }
 /* position of score in grid */
-.score-cont {
+.score-cont, .inst-content {
     grid-row-start: 3;
     align-self: center;
     justify-self: center;
 
 }
 /* position of play again in grid */
-.play-button {
+.play-button, .start-button {
     grid-row-start: 4;
     align-self: center;
     justify-self: center;
 }
 
-.play-again {
+.play-again, .play {
     font-size: 40px;   
 }
 
