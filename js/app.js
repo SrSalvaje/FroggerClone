@@ -8,39 +8,25 @@ playerLife = document.querySelector(".lifeC"),
 minutes=document.querySelector(".minutesM"),
 minutesM=document.querySelector(".minutes"),//for modal
 seconds=document.querySelector(".seconds"),
-secondsM=document.querySelector(".secondsM");
-const modal = document.querySelector(".modal");//used to apply the class the makes the modal window visble
-const closeButton = document.querySelector(".close-modal");
+secondsM=document.querySelector(".secondsM"),
+modal = document.querySelector(".modal"),//used to apply the class the makes the modal window visble
+closeButton = document.querySelector(".close-modal"),
+playAgain = document.querySelector(".play-again");
 let lifeCount=1,
 scoreCount=0,
 timeC=0,
 min=0,
 secs=0;
-const playAgain = document.querySelector(".play-again");
 /////////////////////////////////////modal window/////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
 function toggleModal() { 
     modal.classList.toggle("show-modal");
-
 }
 
-
-function defeat(){
-        stopGameTimer(); //stops timer (line 223)
-        toggleModal();//launches modal window (line 178)
-
-}
-
-
-/*
-*this section deals with the play again button
-*/
-// closes the modal window()(see event listener in line 260) and calls restart()(line 71)
 function replay(){
     toggleModal();
     restart();
 }
-
 /////////////////////////////internal clock for gem auto respawn/////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 let myinterval= setInterval(() => { 
@@ -51,7 +37,7 @@ let myinterval= setInterval(() => {
 function stopGameTimer(){
     clearInterval(myinterval);
 }
-    ///////respawning of gems and hearts///
+///////respawning of gems and hearts///
 function respawning(){
     timeC++; //internal timer
     if(timeC%5===0){
@@ -87,9 +73,6 @@ function mytimer(){
         secondsM.innerHTML=secs;
     } 
 }
-
-  
-
 //////////////////////////////////////////////Modal Window///////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 /* function toggleModal(){
@@ -101,8 +84,7 @@ function mytimer(){
 //////////////////////////////////////////////////////////////////////////
 
 class Character{
-    constructor(yPos, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571, enemyX:-101,
-    /* gems*/ }){
+    constructor(yPos, xPos, startPos={/* player */playerY:654, playerX:301,/* Enemy */ r1:73, r2:156, r3:239, r4:322, r5:405, r6:488,r7:571, enemyX:-101,}){
         //xPos and yPos are the only paraemters needed by Enemy and Player classes, 
         //rest of the parameters are assigned by Character constructor
         this.xPos=xPos;
@@ -113,7 +95,6 @@ class Character{
         //needed by Player and Enemy
         this.x=startPos[xPos];
         this.y=startPos[yPos];
-        
         //values used to keep charachter on canvas
         this.topAndLeftBorder=0;
         this.bottomBorder=607;
@@ -122,8 +103,7 @@ class Character{
         this.sideStep=101;
         this.vertStep=83;
     }
-
-    //function based on 'getRandomInt' of MDN web docs @
+    //randomize function based on 'getRandomInt' of MDN web docs @
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
     static randomize(min, max) {
         min = Math.ceil(min);
@@ -143,7 +123,6 @@ class Character{
         });
     }
 }
-
 ///////////////////////////////////////////////////////////////////////////
 /*************************Enemy Constructor*******************************/
 ///////////////////////////////////////////////////////////////////////////
@@ -157,6 +136,7 @@ class Enemy extends Character{
          this.maxSpeed=250;
          this.speed=Character.randomize(this.minSpeed, this.maxSpeed);
     }
+
     update(dt){
         //this conditional moves and loops the enemy
         if(this.x< this.rightBorder+100){//checks that charachter is inside canvas
@@ -173,11 +153,8 @@ class Enemy extends Character{
 class Player extends Character{
     constructor(yPos, xPos, speed,startPos){
         super(yPos, xPos, speed,startPos);
-        //properties used to move characher, to move 'left' and/or 'up' value must be preceded by '-'
-       
         //image to render
         this.sprite="images/char-boy.png";
-
     }
     update(){
         //////////check for x and y collision//////////////
@@ -186,8 +163,7 @@ class Player extends Character{
             this.reset();
         }
         this.CheckCollision(allGems, this.keepScore);
-        this.CheckCollision(lives, this.pickLife);
-        
+        this.CheckCollision(lives, this.pickLife); 
     }
 
     reset(){
@@ -205,27 +181,14 @@ class Player extends Character{
            playerLife.innerHTML=lifeCount;
            for(let enemy of allEnemies){//stops enemy movement
             enemy.speed=0;  
-        }   
-        setTimeout(() => { 
+        }
+
+            stopGameTimer(); 
+
+            setTimeout(() => { 
             modal.classList.toggle("show-modal");
         }, 1000);    
-        }
-           
-            
-        
-    }
-
-    gameOver(){
-        if(lifeCount===0){
-            for(let enemy of allEnemies){//stops enemy movement
-                enemy.speed=0;
-                modal.classList.toggle("show-modal");
-            }
-            /* setTimeout(() => { 
-                modal.classList.toggle("show-modal");
-            }, 1000); */
-        }  
-
+        }    
     }
 
     keepScore(element){
@@ -235,9 +198,9 @@ class Player extends Character{
         allGems.splice(allGems.indexOf(element),1); //remove the collected gem from the rendering array
         //next lines are used to increase speed every time 500 points are acumulated, because score incrmements unevenly, based on gem value, the script rounds it down
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-        let divide=scoreCount/100; //first divide the score by a 100 in order to turn it into decimal points so 525 turns into 5.25
-        let round = Math.trunc(divide); //then round it down to the nearest integer, this gets rid of the decimal points so 5.25 turns into 5
-        let multiply = round*100; //then multiply it by 100 so 5 is now 500
+        let divide=scoreCount/100, //first divide the score by a 100 in order to turn it into decimal points so 525 turns into 5.25
+        round = Math.trunc(divide), //then round it down to the nearest integer, this gets rid of the decimal points so 5.25 turns into 5
+        multiply = round*100; //then multiply it by 100 so 5 is now 500 
         if(round!==0 && multiply%500===0){ // check if its a multiple of 500 and if so,  run the the code
             allEnemies.forEach(element => {
                 if(element.minSpeed<300){ //if the min speed of Enemy is less than 300
@@ -247,11 +210,10 @@ class Player extends Character{
                     element.maxSpeed+=5; // increase it by 5
                 }
                 element.speed=Character.randomize(element.minSpeed, element.maxSpeed); // randomize and update the current speed of all enemies based on new min and max values
-            });
-            console.log(`score is ${scoreCount}, min speed is now ${e1.minSpeed}, max speed is now ${e1.maxSpeed}, and e1 current speed is ${e1.speed}`);
-            
-        };   
-        if(allGems.length === 0){ //if all from a set of 3 are collected
+            });    
+        };
+
+        if(allGems.length === 0){ //if all gems from a set of 3 are collected
             scoreCount+=50;//give 50 point bonus
             score.innerHTML=`${scoreCount}`;  //update DOM   
             setTimeout(() => { //then wait 1 sec before respawning new gems
@@ -262,9 +224,9 @@ class Player extends Character{
                 allGems.push(g1,g2,g3);
                 }
             }, 1000);      
-        }
-        
+        } 
     }
+
     pickLife(){
         lifeCount+=1;
         playerLife.innerHTML=lifeCount;
@@ -300,8 +262,6 @@ class Player extends Character{
 ///////////////////////////////////////////////////////////////////////////
 /*********************************Gems************************************/
 ///////////////////////////////////////////////////////////////////////////
-
-
 /* x range: -2 to 604 with  incrememnts of 101
    y range: 73 to 571 with increments of 83 */
 class Gems extends Character{
@@ -349,8 +309,6 @@ class Lives extends Gems{
 /******************************event listeners*******************************/
 /////////////////////////////////////////////////////////////////////////////
 
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function _listener(e) {
     var allowedKeys = {
         37: 'left',
@@ -360,7 +318,6 @@ document.addEventListener('keyup', function _listener(e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
 
 ///keeps screen from scrolling///////////
 window.addEventListener("keydown", function(e) {
@@ -395,8 +352,7 @@ player = new Player('playerY','playerX'); //parameters: ypos, xpos
 let g1=new Gems(-2, 604, 73, 571),
 g2 = new Gems(-2, 604, 73, 571),
 g3=new Gems(-2, 604, 73, 571),
-allGems=[g1,g2,g3],
-   
+allGems=[g1,g2,g3], 
 //lives
 l1= new Lives(-2, 604, 73, 571),
 lives=[l1]; 

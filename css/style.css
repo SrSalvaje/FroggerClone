@@ -2,10 +2,15 @@ body {
     text-align: center;
     width: 100%;
 }
-
-.scoreboard{
-    font: 80 20px "Open Sans", sans-serif;
+h1, h2{
+    margin: 5px;
+    padding: 0px;
 }
+h1{
+    font:   80 40px "Open Sans", sans-serif;
+}
+
+
 /************************* Grid Stuff******************************* */
 .myGrid{
     display: grid;
@@ -15,7 +20,6 @@ body {
 
 .row1{
     grid-area: 1/1/2/2; /* row/column/row/column */
-
 }
 
 .row2{
@@ -23,32 +27,32 @@ body {
 }
 
 /************************************** score grid stuff *******************/
-.level{
-
+.scoreboard{
+    display: grid;
+    grid-template-columns: 33%;
+    grid-template-rows:  100%;
+    font: 80 30px "Open Sans", sans-serif;
+    
+}
+.l{
+    grid-column: 1/2;
+    text-align: right;
 }
 
-.lives{
-
+.s{
+    grid-column: 2/3;
 }
 
-.score{
-
-}
-
-.time{
-
+.t{
+    grid-column: 3/4;
+    text-align: left;
 }
 
 /********************** end of score grid****************************** */
 .row3{
     grid-area: 3/1/4/2;
-
 }
 
-.row4{
-    grid-area: 4/1/5/2;
-
-}
 /* *****************************modal********************************** */
 .modal {
     position: fixed;
@@ -71,10 +75,10 @@ body {
     transform: translate(-50%, -50%);
     background: white;
     padding: 1rem 1.5rem;
-    width: 80vw;
+    width: 40vw;
     height: 40vh;
     border-radius: 0.5rem;
-    font-size: 25px; 
+    font-size: 30px; 
 }
 /* h1 inside modal */
 .modal-title {
@@ -115,11 +119,8 @@ body {
 }
 
 .play-again {
-    font-size: 40px;
-    background: linear-gradient(to right, #02ccba1f 0%, #aa7ecd52 100%)
+    font-size: 40px;   
 }
-
-
 
 .show-modal{
     opacity: 1;
@@ -129,7 +130,6 @@ body {
 }
 
 .play-again:hover {
-    background: linear-gradient(to right, #02ccba9c 0%, #aa7ecd9c 100%);
     color: white;
 }
 
