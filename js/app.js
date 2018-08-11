@@ -357,7 +357,7 @@ closeButton.addEventListener("click", toggleModal);
 ///////////////////////////////////////////////////////////////////////////
 
 //enemies
- const e1= new Enemy('r1','enemyX'),
+const e1= new Enemy('r1','enemyX'),
 e2=new Enemy('r2','enemyX'),
 e3=new Enemy('r3','enemyX'),
 e4=new Enemy('r4','enemyX'),
@@ -376,22 +376,3 @@ allGems=[g1,g2,g3],
 l1= new Lives(-2, 604, 73, 571),
 lives=[l1];
 
-/* function instant(){
-    allGems.length=0;
-    allEnemies.length=0;
-    lives.length=0
-    e1= new Enemy('r1','enemyX');
-    e2=new Enemy('r2','enemyX');
-    e3=new Enemy('r3','enemyX');
-    e4=new Enemy('r4','enemyX');
-    e5=new Enemy('r5','enemyX');
-    e6=new Enemy('r6','enemyX');
-    e7=new Enemy('r7','enemyX');
-    player = new Player('playerY','playerX');
-    g1=new Gems(-2, 604, 73, 571);
-    g2 = new Gems(-2, 604, 73, 571);
-    g3=new Gems(-2, 604, 73, 571);
-    l1= new Lives(-2, 604, 73, 571);
-    allGems.push(g1,g2,g3);
-}
- */
