@@ -1,6 +1,37 @@
-frontend-nanodegree-arcade-game
-===============================
+# Udacity FEND Project 4
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## About
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+This is a clone of the popular Frogger arcade game, the game engine, images and resources.js were provided by the Udacity team,
+the rest of the code is written by me, with the exception of the randomize function which is based on 'getRandomInt' of [MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random)
+
+## installation
+
+You can either play the game [online](https://srsalvaje.github.io/UdacityP4Frogger/) or download/clone the repository from my [Github](https://github.com/SrSalvaje/UdacityP4Frogger)
+and rune it locally. 
+
+## Game Instructions
+
+Test your reflexes, avoid the bugs and see how long you can stay alive.
+
+Use the arrow keys to move, collect hearts to gain extra lives and gems to score points!
+When a heart appears you only have 10 seconds to pick it up before it disappears, extra hearts 
+spawn every 30 seconds.
+
+Gems appear in sets of three and disappear after 5 seconds, if you collect all gems from a set 
+you get a 50 points bonus, but the bugs’ speed will change to a random value; blue gems are worth 50, 
+green 75 and orange 100.
+
+Every 500 points the bugs’ minimum and maximum speed is increased and randomized. 
+If you reach the water, you are teleported back to the grass.
+
+Good luck!
+
+## To do
+
+Create a global window object to wrap most variable declarations in ordet to follow the 'principle of least knowledge'.
+
+Add focus so that modal windows can be closed without mouse.
+
+Give more style to the page and modal windows.
+
