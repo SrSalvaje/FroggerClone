@@ -30,6 +30,7 @@ var Engine = (function(global) {
 
     canvas.width = 707; // was 505
     canvas.height = 808; //was 606
+    canvas.className="myCanvas";
     var myCanv=document.querySelector('.canv');
     myCanv.appendChild(canvas);
 
