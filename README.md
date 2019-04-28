@@ -8,7 +8,7 @@ the rest of the code is written by me, with the exception of the randomize funct
 ## installation
 
 You can either play the game [online](https://srsalvaje.github.io/UdacityP4Frogger/) or download/clone the repository from my [Github](https://github.com/SrSalvaje/UdacityP4Frogger)
-and rune it locally. 
+and run it locally. Please note that is not meant for mobile devices 
 
 ## Game Instructions
 
